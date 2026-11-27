@@ -11,9 +11,19 @@ const root = fileURLToPath(new URL("..", import.meta.url));
 const ORIGIN = "http://ha.test";
 const WIDTH = 1280;
 
-// The captures: one per tab, each in the light and the dark theme (screenshots/panel-<tab>[-dark].png)
-export const shots = ["overview", "trips", "consumption", "fuel", "maintenance", "lease", "settings"].flatMap((tab) =>
-  ["light", "dark"].map((theme) => ({ tab, theme, file: `panel-${tab}${theme === "dark" ? "-dark" : ""}` })),
+// The captures: one per tab, each in the light and the dark theme (screenshots/<file>[-dark].png). The names are
+// written out so that scripts/check_screenshots.py finds them before their first render.
+const TABS = {
+  overview: "panel-overview",
+  trips: "panel-trips",
+  consumption: "panel-consumption",
+  fuel: "panel-fuel",
+  maintenance: "panel-maintenance",
+  lease: "panel-lease",
+  settings: "panel-settings",
+};
+export const shots = Object.entries(TABS).flatMap(([tab, file]) =>
+  ["light", "dark"].map((theme) => ({ tab, theme, file: `${file}${theme === "dark" ? "-dark" : ""}` })),
 );
 
 const THEMES = {
