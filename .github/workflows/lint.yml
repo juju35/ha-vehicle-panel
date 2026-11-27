@@ -59,7 +59,7 @@ jobs:
           version=$(grep -o '@biomejs/biome@[0-9][0-9.]*' .pre-commit-config.yaml | head -n1 | cut -d@ -f3)
           test -n "$version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
-      - uses: biomejs/setup-biome@4c91541eaada48f67d7dbd7833600ce162b68f51 # v2
+      - uses: biomejs/setup-biome@77af1e9ce0cc32955e83b0c3e30c28ae3b81cab7 # v2
         with:
           version: ${{ steps.biome-version.outputs.version }}
       - run: biome ci --reporter=github .
