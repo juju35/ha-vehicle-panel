@@ -1,0 +1,9 @@
+node_modules/
+dist/
+report/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+# Assembled from src/ by scripts/build-frontend.mjs (not committed)
+custom_components/vehicle_panel/frontend/vehicle-panel.js

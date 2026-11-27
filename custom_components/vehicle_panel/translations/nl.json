@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Voegt het paneel Voertuigen toe aan de zijbalk: actieradius, ritten, verbruik, brandstofprijzen, onderhoud en lease van uw auto's. Het leasecontract van elke auto stelt u in op het tabblad Instellingen van het paneel.",
+        "data": {
+          "vehicles": "Voertuigen",
+          "fuel_entities": "Brandstofprijzen",
+          "maintenance_entities": "Onderhoud",
+          "low_range": "Waarschuwing lage actieradius"
+        },
+        "data_description": {
+          "vehicles": "De auto's om te tonen: elk apparaat met een device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstations van de integratie Carburants France (optioneel)",
+          "maintenance_entities": "Entiteiten van de integratie Maintenance (optioneel)",
+          "low_range": "Onder deze actieradius wordt de auto oranje gemarkeerd"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Kies minstens één voertuig."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel is al ingesteld."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Voertuigen",
+        "data_description": {
+          "vehicles": "De auto's om te tonen: elk apparaat met een device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstations van de integratie Carburants France (optioneel)",
+          "maintenance_entities": "Entiteiten van de integratie Maintenance (optioneel)",
+          "low_range": "Onder deze actieradius wordt de auto oranje gemarkeerd"
+        },
+        "data": {
+          "vehicles": "Voertuigen",
+          "fuel_entities": "Brandstofprijzen",
+          "maintenance_entities": "Onderhoud",
+          "low_range": "Waarschuwing lage actieradius"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Kies minstens één voertuig."
+    }
+  }
+}

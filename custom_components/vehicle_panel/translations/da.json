@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Tilføjer panelet Køretøjer til sidebjælken: rækkevidde, ture, forbrug, brændstofpriser, vedligeholdelse og leasing af dine biler. Leasingkontrakten for hver bil indstilles på panelets fane Indstillinger.",
+        "data": {
+          "vehicles": "Køretøjer",
+          "fuel_entities": "Brændstofpriser",
+          "maintenance_entities": "Vedligeholdelse",
+          "low_range": "Advarsel om lav rækkevidde"
+        },
+        "data_description": {
+          "vehicles": "Bilerne der vises: enhver enhed med en device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstationer fra integrationen Carburants France (valgfrit)",
+          "maintenance_entities": "Enheder fra integrationen Maintenance (valgfrit)",
+          "low_range": "Under denne rækkevidde markeres bilen med gult"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Vælg mindst ét køretøj."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel er allerede sat op."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Køretøjer",
+        "data_description": {
+          "vehicles": "Bilerne der vises: enhver enhed med en device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstationer fra integrationen Carburants France (valgfrit)",
+          "maintenance_entities": "Enheder fra integrationen Maintenance (valgfrit)",
+          "low_range": "Under denne rækkevidde markeres bilen med gult"
+        },
+        "data": {
+          "vehicles": "Køretøjer",
+          "fuel_entities": "Brændstofpriser",
+          "maintenance_entities": "Vedligeholdelse",
+          "low_range": "Advarsel om lav rækkevidde"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Vælg mindst ét køretøj."
+    }
+  }
+}

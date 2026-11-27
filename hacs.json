@@ -1,0 +1,7 @@
+{
+  "name": "Vehicle Panel",
+  "render_readme": true,
+  "zip_release": true,
+  "filename": "vehicle_panel.zip",
+  "homeassistant": "2026.11.0"
+}

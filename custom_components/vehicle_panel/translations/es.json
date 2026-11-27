@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Añade el panel Vehículos a la barra lateral: autonomía, trayectos, consumo, precios del combustible, mantenimiento y renting de sus coches. El contrato de renting de cada coche se ajusta en la pestaña Ajustes del panel.",
+        "data": {
+          "vehicles": "Vehículos",
+          "fuel_entities": "Precios del combustible",
+          "maintenance_entities": "Mantenimiento",
+          "low_range": "Aviso de autonomía baja"
+        },
+        "data_description": {
+          "vehicles": "Los coches que mostrar: cualquier dispositivo con un rastreador (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Estaciones de la integración Carburants France (opcional)",
+          "maintenance_entities": "Entidades de la integración Maintenance (opcional)",
+          "low_range": "Por debajo de esta autonomía, el coche se marca en ámbar"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Elija al menos un vehículo."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel ya está configurado."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vehículos",
+        "data_description": {
+          "vehicles": "Los coches que mostrar: cualquier dispositivo con un rastreador (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Estaciones de la integración Carburants France (opcional)",
+          "maintenance_entities": "Entidades de la integración Maintenance (opcional)",
+          "low_range": "Por debajo de esta autonomía, el coche se marca en ámbar"
+        },
+        "data": {
+          "vehicles": "Vehículos",
+          "fuel_entities": "Precios del combustible",
+          "maintenance_entities": "Mantenimiento",
+          "low_range": "Aviso de autonomía baja"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Elija al menos un vehículo."
+    }
+  }
+}

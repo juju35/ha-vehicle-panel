@@ -1,0 +1,44 @@
+default_install_hook_types: [pre-commit, commit-msg]
+repos:
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v9.27.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        additional_dependencies: ['@commitlint/config-conventional']
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-merge-conflict
+      - id: mixed-line-ending
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.17.5
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/biomejs/pre-commit
+    rev: "v2.6.8"
+    hooks:
+      - id: biome-check
+        additional_dependencies: ["@biomejs/biome@2.6.8"]
+  - repo: local
+    hooks:
+      - id: card-js-syntax
+        name: card JS syntax (node --check)
+        entry: bash -c 'for f in "$@"; do node --check "$f" || exit 1; done' --
+        language: system
+        files: \.js$
+  - repo: local
+    hooks:
+      - id: screenshots-used
+        name: every capture shown in the README, and only those
+        entry: python scripts/check_screenshots.py
+        language: python
+        pass_filenames: false
+        always_run: true

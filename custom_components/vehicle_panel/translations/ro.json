@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Adaugă panoul Vehicule în bara laterală: autonomie, călătorii, consum, prețuri carburanți, întreținere și leasing pentru mașinile dvs. Contractul de leasing al fiecărei mașini se setează în fila Setări a panoului.",
+        "data": {
+          "vehicles": "Vehicule",
+          "fuel_entities": "Prețuri carburanți",
+          "maintenance_entities": "Întreținere",
+          "low_range": "Alertă autonomie redusă"
+        },
+        "data_description": {
+          "vehicles": "Mașinile de afișat: orice dispozitiv cu un dispozitiv de urmărire (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stațiile integrării Carburants France (opțional)",
+          "maintenance_entities": "Entitățile integrării Maintenance (opțional)",
+          "low_range": "Sub această autonomie, mașina este marcată cu portocaliu"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Alegeți cel puțin un vehicul."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel este deja configurat."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vehicule",
+        "data_description": {
+          "vehicles": "Mașinile de afișat: orice dispozitiv cu un dispozitiv de urmărire (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stațiile integrării Carburants France (opțional)",
+          "maintenance_entities": "Entitățile integrării Maintenance (opțional)",
+          "low_range": "Sub această autonomie, mașina este marcată cu portocaliu"
+        },
+        "data": {
+          "vehicles": "Vehicule",
+          "fuel_entities": "Prețuri carburanți",
+          "maintenance_entities": "Întreținere",
+          "low_range": "Alertă autonomie redusă"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Alegeți cel puțin un vehicul."
+    }
+  }
+}

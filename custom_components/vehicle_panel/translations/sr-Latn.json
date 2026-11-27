@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Dodaje panel Vozila na bočnu traku: domet, vožnje, potrošnja, cene goriva, održavanje i lizing vaših automobila. Ugovor o lizingu svakog automobila podešava se u kartici Podešavanja panela.",
+        "data": {
+          "vehicles": "Vozila",
+          "fuel_entities": "Cene goriva",
+          "maintenance_entities": "Održavanje",
+          "low_range": "Upozorenje na mali domet"
+        },
+        "data_description": {
+          "vehicles": "Automobili za prikaz: svaki uređaj sa uređajem za praćenje (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stanice integracije Carburants France (opciono)",
+          "maintenance_entities": "Entiteti integracije Maintenance (opciono)",
+          "low_range": "Ispod ovog dometa automobil se označava narandžastom bojom"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izaberite bar jedno vozilo."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel je već podešen."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vozila",
+        "data_description": {
+          "vehicles": "Automobili za prikaz: svaki uređaj sa uređajem za praćenje (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stanice integracije Carburants France (opciono)",
+          "maintenance_entities": "Entiteti integracije Maintenance (opciono)",
+          "low_range": "Ispod ovog dometa automobil se označava narandžastom bojom"
+        },
+        "data": {
+          "vehicles": "Vozila",
+          "fuel_entities": "Cene goriva",
+          "maintenance_entities": "Održavanje",
+          "low_range": "Upozorenje na mali domet"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izaberite bar jedno vozilo."
+    }
+  }
+}

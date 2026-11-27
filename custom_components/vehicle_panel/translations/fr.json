@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Ajoute le panneau Voitures à la barre latérale : autonomie, trajets, consommation, prix des carburants, entretien et LOA de vos voitures. Le contrat de location de chaque voiture se règle dans l’onglet Réglages du panneau.",
+        "data": {
+          "vehicles": "Véhicules",
+          "fuel_entities": "Prix des carburants",
+          "maintenance_entities": "Entretien",
+          "low_range": "Alerte d’autonomie faible"
+        },
+        "data_description": {
+          "vehicles": "Les voitures à afficher : tout appareil doté d’un traceur (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stations de l’intégration Carburants France (facultatif)",
+          "maintenance_entities": "Entités de l’intégration Maintenance (facultatif)",
+          "low_range": "En dessous de cette autonomie, la voiture passe en orange"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Choisissez au moins un véhicule."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel est déjà configuré."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Véhicules",
+        "data_description": {
+          "vehicles": "Les voitures à afficher : tout appareil doté d’un traceur (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stations de l’intégration Carburants France (facultatif)",
+          "maintenance_entities": "Entités de l’intégration Maintenance (facultatif)",
+          "low_range": "En dessous de cette autonomie, la voiture passe en orange"
+        },
+        "data": {
+          "vehicles": "Véhicules",
+          "fuel_entities": "Prix des carburants",
+          "maintenance_entities": "Entretien",
+          "low_range": "Alerte d’autonomie faible"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Choisissez au moins un véhicule."
+    }
+  }
+}

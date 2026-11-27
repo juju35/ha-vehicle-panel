@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Pievieno sānjoslai paneli Transportlīdzekļi: nobraukums ar atlikušo degvielu, braucieni, patēriņš, degvielas cenas, apkope un līzings jūsu automašīnām. Katras automašīnas līzinga līgumu iestata paneļa cilnē Iestatījumi.",
+        "data": {
+          "vehicles": "Transportlīdzekļi",
+          "fuel_entities": "Degvielas cenas",
+          "maintenance_entities": "Apkope",
+          "low_range": "Brīdinājums par mazu nobraukumu"
+        },
+        "data_description": {
+          "vehicles": "Rādāmās automašīnas: jebkura ierīce ar izsekotāju (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Integrācijas Carburants France stacijas (pēc izvēles)",
+          "maintenance_entities": "Integrācijas Maintenance vienības (pēc izvēles)",
+          "low_range": "Zem šī nobraukuma automašīna tiek iezīmēta oranžā krāsā"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izvēlieties vismaz vienu transportlīdzekli."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel jau ir iestatīts."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Transportlīdzekļi",
+        "data_description": {
+          "vehicles": "Rādāmās automašīnas: jebkura ierīce ar izsekotāju (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Integrācijas Carburants France stacijas (pēc izvēles)",
+          "maintenance_entities": "Integrācijas Maintenance vienības (pēc izvēles)",
+          "low_range": "Zem šī nobraukuma automašīna tiek iezīmēta oranžā krāsā"
+        },
+        "data": {
+          "vehicles": "Transportlīdzekļi",
+          "fuel_entities": "Degvielas cenas",
+          "maintenance_entities": "Apkope",
+          "low_range": "Brīdinājums par mazu nobraukumu"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izvēlieties vismaz vienu transportlīdzekli."
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Добавляет панель «Автомобили» на боковую панель: запас хода, поездки, расход, цены на топливо, обслуживание и лизинг ваших автомобилей. Договор лизинга каждого автомобиля задаётся на вкладке «Настройки» панели.",
+        "data": {
+          "vehicles": "Автомобили",
+          "fuel_entities": "Цены на топливо",
+          "maintenance_entities": "Обслуживание",
+          "low_range": "Предупреждение о малом запасе хода"
+        },
+        "data_description": {
+          "vehicles": "Автомобили для показа: любое устройство с трекером (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "АЗС из интеграции Carburants France (необязательно)",
+          "maintenance_entities": "Объекты из интеграции Maintenance (необязательно)",
+          "low_range": "Ниже этого запаса хода автомобиль выделяется оранжевым"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Выберите хотя бы один автомобиль."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel уже настроен."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Автомобили",
+        "data_description": {
+          "vehicles": "Автомобили для показа: любое устройство с трекером (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "АЗС из интеграции Carburants France (необязательно)",
+          "maintenance_entities": "Объекты из интеграции Maintenance (необязательно)",
+          "low_range": "Ниже этого запаса хода автомобиль выделяется оранжевым"
+        },
+        "data": {
+          "vehicles": "Автомобили",
+          "fuel_entities": "Цены на топливо",
+          "maintenance_entities": "Обслуживание",
+          "low_range": "Предупреждение о малом запасе хода"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Выберите хотя бы один автомобиль."
+    }
+  }
+}

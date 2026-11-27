@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Fügt der Seitenleiste das Fahrzeug-Panel hinzu: Reichweite, Fahrten, Verbrauch, Kraftstoffpreise, Wartung und Leasing Ihrer Autos. Den Leasingvertrag jedes Autos stellen Sie im Reiter Einstellungen des Panels ein.",
+        "data": {
+          "vehicles": "Fahrzeuge",
+          "fuel_entities": "Kraftstoffpreise",
+          "maintenance_entities": "Wartung",
+          "low_range": "Warnung bei geringer Reichweite"
+        },
+        "data_description": {
+          "vehicles": "Die anzuzeigenden Autos: jedes Gerät mit einem Device-Tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstellen der Integration Carburants France (optional)",
+          "maintenance_entities": "Entitäten der Integration Maintenance (optional)",
+          "low_range": "Unter dieser Reichweite wird das Auto gelb markiert"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Wählen Sie mindestens ein Fahrzeug."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel ist bereits eingerichtet."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Fahrzeuge",
+        "data_description": {
+          "vehicles": "Die anzuzeigenden Autos: jedes Gerät mit einem Device-Tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Tankstellen der Integration Carburants France (optional)",
+          "maintenance_entities": "Entitäten der Integration Maintenance (optional)",
+          "low_range": "Unter dieser Reichweite wird das Auto gelb markiert"
+        },
+        "data": {
+          "vehicles": "Fahrzeuge",
+          "fuel_entities": "Kraftstoffpreise",
+          "maintenance_entities": "Wartung",
+          "low_range": "Warnung bei geringer Reichweite"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Wählen Sie mindestens ein Fahrzeug."
+    }
+  }
+}

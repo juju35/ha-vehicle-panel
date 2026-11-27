@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Προσθέτει τον πίνακα Οχήματα στην πλευρική γραμμή: αυτονομία, διαδρομές, κατανάλωση, τιμές καυσίμων, συντήρηση και μίσθωση των αυτοκινήτων σας. Η σύμβαση μίσθωσης κάθε αυτοκινήτου ορίζεται στην καρτέλα Ρυθμίσεις του πίνακα.",
+        "data": {
+          "vehicles": "Οχήματα",
+          "fuel_entities": "Τιμές καυσίμων",
+          "maintenance_entities": "Συντήρηση",
+          "low_range": "Ειδοποίηση χαμηλής αυτονομίας"
+        },
+        "data_description": {
+          "vehicles": "Τα αυτοκίνητα προς εμφάνιση: κάθε συσκευή με εντοπιστή (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Πρατήρια της ενσωμάτωσης Carburants France (προαιρετικό)",
+          "maintenance_entities": "Οντότητες της ενσωμάτωσης Maintenance (προαιρετικό)",
+          "low_range": "Κάτω από αυτή την αυτονομία το αυτοκίνητο σημειώνεται με πορτοκαλί"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Επιλέξτε τουλάχιστον ένα όχημα."
+    },
+    "abort": {
+      "single_instance_allowed": "Το Vehicle Panel έχει ήδη ρυθμιστεί."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Οχήματα",
+        "data_description": {
+          "vehicles": "Τα αυτοκίνητα προς εμφάνιση: κάθε συσκευή με εντοπιστή (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Πρατήρια της ενσωμάτωσης Carburants France (προαιρετικό)",
+          "maintenance_entities": "Οντότητες της ενσωμάτωσης Maintenance (προαιρετικό)",
+          "low_range": "Κάτω από αυτή την αυτονομία το αυτοκίνητο σημειώνεται με πορτοκαλί"
+        },
+        "data": {
+          "vehicles": "Οχήματα",
+          "fuel_entities": "Τιμές καυσίμων",
+          "maintenance_entities": "Συντήρηση",
+          "low_range": "Ειδοποίηση χαμηλής αυτονομίας"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Επιλέξτε τουλάχιστον ένα όχημα."
+    }
+  }
+}

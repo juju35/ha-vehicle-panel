@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Додає панель «Автомобілі» на бічну панель: запас ходу, поїздки, витрата, ціни на пальне, обслуговування та лізинг ваших автомобілів. Договір лізингу кожного автомобіля задається на вкладці «Налаштування» панелі.",
+        "data": {
+          "vehicles": "Автомобілі",
+          "fuel_entities": "Ціни на пальне",
+          "maintenance_entities": "Обслуговування",
+          "low_range": "Попередження про малий запас ходу"
+        },
+        "data_description": {
+          "vehicles": "Автомобілі для показу: будь-який пристрій із трекером (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "АЗС з інтеграції Carburants France (необов’язково)",
+          "maintenance_entities": "Об’єкти з інтеграції Maintenance (необов’язково)",
+          "low_range": "Нижче цього запасу ходу автомобіль позначається помаранчевим"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Виберіть принаймні один автомобіль."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel уже налаштовано."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Автомобілі",
+        "data_description": {
+          "vehicles": "Автомобілі для показу: будь-який пристрій із трекером (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "АЗС з інтеграції Carburants France (необов’язково)",
+          "maintenance_entities": "Об’єкти з інтеграції Maintenance (необов’язково)",
+          "low_range": "Нижче цього запасу ходу автомобіль позначається помаранчевим"
+        },
+        "data": {
+          "vehicles": "Автомобілі",
+          "fuel_entities": "Ціни на пальне",
+          "maintenance_entities": "Обслуговування",
+          "low_range": "Попередження про малий запас ходу"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Виберіть принаймні один автомобіль."
+    }
+  }
+}

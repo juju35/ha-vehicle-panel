@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Добавя панела Превозни средства в страничната лента: пробег до празен резервоар, пътувания, разход, цени на горивата, поддръжка и лизинг на автомобилите ви. Договорът за лизинг на всеки автомобил се задава в раздела Настройки на панела.",
+        "data": {
+          "vehicles": "Превозни средства",
+          "fuel_entities": "Цени на горивата",
+          "maintenance_entities": "Поддръжка",
+          "low_range": "Предупреждение за малък пробег"
+        },
+        "data_description": {
+          "vehicles": "Автомобилите за показване: всяко устройство с проследяващо устройство (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Бензиностанции от интеграцията Carburants France (по избор)",
+          "maintenance_entities": "Обекти от интеграцията Maintenance (по избор)",
+          "low_range": "Под този пробег автомобилът се отбелязва в оранжево"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Изберете поне едно превозно средство."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel вече е настроен."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Превозни средства",
+        "data_description": {
+          "vehicles": "Автомобилите за показване: всяко устройство с проследяващо устройство (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Бензиностанции от интеграцията Carburants France (по избор)",
+          "maintenance_entities": "Обекти от интеграцията Maintenance (по избор)",
+          "low_range": "Под този пробег автомобилът се отбелязва в оранжево"
+        },
+        "data": {
+          "vehicles": "Превозни средства",
+          "fuel_entities": "Цени на горивата",
+          "maintenance_entities": "Поддръжка",
+          "low_range": "Предупреждение за малък пробег"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Изберете поне едно превозно средство."
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Adiciona o painel Veículos à barra lateral: autonomia, viagens, consumo, preços dos combustíveis, manutenção e renting dos seus carros. O contrato de renting de cada carro define-se no separador Definições do painel.",
+        "data": {
+          "vehicles": "Veículos",
+          "fuel_entities": "Preços dos combustíveis",
+          "maintenance_entities": "Manutenção",
+          "low_range": "Alerta de autonomia baixa"
+        },
+        "data_description": {
+          "vehicles": "Os carros a mostrar: qualquer dispositivo com um rastreador (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Postos da integração Carburants France (opcional)",
+          "maintenance_entities": "Entidades da integração Maintenance (opcional)",
+          "low_range": "Abaixo desta autonomia, o carro fica assinalado a âmbar"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Escolha pelo menos um veículo."
+    },
+    "abort": {
+      "single_instance_allowed": "O Vehicle Panel já está configurado."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Veículos",
+        "data_description": {
+          "vehicles": "Os carros a mostrar: qualquer dispositivo com um rastreador (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Postos da integração Carburants France (opcional)",
+          "maintenance_entities": "Entidades da integração Maintenance (opcional)",
+          "low_range": "Abaixo desta autonomia, o carro fica assinalado a âmbar"
+        },
+        "data": {
+          "vehicles": "Veículos",
+          "fuel_entities": "Preços dos combustíveis",
+          "maintenance_entities": "Manutenção",
+          "low_range": "Alerta de autonomia baixa"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Escolha pelo menos um veículo."
+    }
+  }
+}
