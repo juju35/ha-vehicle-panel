@@ -1,7 +1,7 @@
 // Renders the sidebar panel with mock data (scripts/mock-states.mjs) and saves the README screenshots, light and dark.
 // Usage: npm run screenshots (CHROMIUM_PATH=/path/to/chrome to use an installed browser)
 // The car pictures of scripts/pictures/ are only used here, for the mock vehicles' Renault Picture sensors.
-import { readFileSync } from "node:fs";
+import { mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 import { devices, entities, history, NOW, settings, states } from "./mock-states.mjs";
@@ -53,6 +53,8 @@ const pageHtml = (theme) => `<!doctype html><html><head><meta charset="utf-8">
   body { margin: 0; background: var(--primary-background-color); font-family: Roboto, "Segoe UI", Helvetica, Arial, sans-serif; width: ${WIDTH}px; }
 </style></head><body><div id="root"></div></body></html>`;
 
+// The folder is not in the repository until the first captures are committed
+mkdirSync(`${root}screenshots`, { recursive: true });
 const browser = await chromium.launch(process.env.CHROMIUM_PATH ? { executablePath: process.env.CHROMIUM_PATH } : {});
 let failed = false;
 
