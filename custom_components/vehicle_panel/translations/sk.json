@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Pridá panel Vozidlá na bočný panel: dojazd, jazdy, spotreba, ceny palív, údržba a lízing vašich áut. Lízingovú zmluvu každého auta nastavíte na karte Nastavenia panela.",
+        "data": {
+          "vehicles": "Vozidlá",
+          "fuel_entities": "Ceny palív",
+          "maintenance_entities": "Údržba",
+          "low_range": "Upozornenie na nízky dojazd"
+        },
+        "data_description": {
+          "vehicles": "Autá na zobrazenie: akékoľvek zariadenie so sledovačom (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stanice integrácie Carburants France (voliteľné)",
+          "maintenance_entities": "Entity integrácie Maintenance (voliteľné)",
+          "low_range": "Pod týmto dojazdom sa auto označí oranžovou"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Vyberte aspoň jedno vozidlo."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel je už nastavený."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vozidlá",
+        "data_description": {
+          "vehicles": "Autá na zobrazenie: akékoľvek zariadenie so sledovačom (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stanice integrácie Carburants France (voliteľné)",
+          "maintenance_entities": "Entity integrácie Maintenance (voliteľné)",
+          "low_range": "Pod týmto dojazdom sa auto označí oranžovou"
+        },
+        "data": {
+          "vehicles": "Vozidlá",
+          "fuel_entities": "Ceny palív",
+          "maintenance_entities": "Údržba",
+          "low_range": "Upozornenie na nízky dojazd"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Vyberte aspoň jedno vozidlo."
+    }
+  }
+}

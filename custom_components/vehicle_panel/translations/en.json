@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Adds the Vehicles panel to the sidebar: range, trips, consumption, fuel prices, maintenance and lease of your cars. The lease contract of each car is set in the panel's Settings tab.",
+        "data": {
+          "vehicles": "Vehicles",
+          "fuel_entities": "Fuel prices",
+          "maintenance_entities": "Maintenance",
+          "low_range": "Low range alert"
+        },
+        "data_description": {
+          "vehicles": "The cars to show: any device with a device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stations of the Carburants France integration (optional)",
+          "maintenance_entities": "Entities of the Maintenance integration (optional)",
+          "low_range": "Below this range, the car is flagged in amber"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Pick at least one vehicle."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vehicles",
+        "data_description": {
+          "vehicles": "The cars to show: any device with a device tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stations of the Carburants France integration (optional)",
+          "maintenance_entities": "Entities of the Maintenance integration (optional)",
+          "low_range": "Below this range, the car is flagged in amber"
+        },
+        "data": {
+          "vehicles": "Vehicles",
+          "fuel_entities": "Fuel prices",
+          "maintenance_entities": "Maintenance",
+          "low_range": "Low range alert"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Pick at least one vehicle."
+    }
+  }
+}

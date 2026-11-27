@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Aggiunge il pannello Veicoli alla barra laterale: autonomia, viaggi, consumi, prezzi dei carburanti, manutenzione e leasing delle tue auto. Il contratto di leasing di ogni auto si imposta nella scheda Impostazioni del pannello.",
+        "data": {
+          "vehicles": "Veicoli",
+          "fuel_entities": "Prezzi dei carburanti",
+          "maintenance_entities": "Manutenzione",
+          "low_range": "Avviso autonomia bassa"
+        },
+        "data_description": {
+          "vehicles": "Le auto da mostrare: qualsiasi dispositivo con un tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Distributori dell’integrazione Carburants France (facoltativo)",
+          "maintenance_entities": "Entità dell’integrazione Maintenance (facoltativo)",
+          "low_range": "Sotto questa autonomia l’auto viene segnalata in ambra"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Scegli almeno un veicolo."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel è già configurato."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Veicoli",
+        "data_description": {
+          "vehicles": "Le auto da mostrare: qualsiasi dispositivo con un tracker (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Distributori dell’integrazione Carburants France (facoltativo)",
+          "maintenance_entities": "Entità dell’integrazione Maintenance (facoltativo)",
+          "low_range": "Sotto questa autonomia l’auto viene segnalata in ambra"
+        },
+        "data": {
+          "vehicles": "Veicoli",
+          "fuel_entities": "Prezzi dei carburanti",
+          "maintenance_entities": "Manutenzione",
+          "low_range": "Avviso autonomia bassa"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Scegli almeno un veicolo."
+    }
+  }
+}

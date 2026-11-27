@@ -1,0 +1,14 @@
+// Entry point: the modules in their original order. scripts/build-frontend.mjs (scripts/bundle.mjs) concatenates them
+// in this order into the single module the integration serves.
+import "./core.js";
+import "./discovery.js";
+import "./model.js";
+import "./scene.js";
+import "./styles.js";
+import "./views.js";
+import "./panel.js";
+// The assembled module's own exports (the other `export`s only join the modules)
+export { VEHICLE_PANEL_VERSION, VP_EN, VP_LANGS, vpFmt, vpLang, vpT } from "./core.js";
+export { vpTyrePos, vpVehicle } from "./discovery.js";
+export { vpDaily, vpLease, vpLevel, vpLocked, vpRange, vpStations, vpStatus, vpUrgency, vpWeekly } from "./model.js";
+export { VehiclePanel } from "./panel.js";

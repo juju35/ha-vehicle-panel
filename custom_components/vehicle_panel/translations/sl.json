@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Doda ploščo Vozila v stransko vrstico: doseg, vožnje, poraba, cene goriv, vzdrževanje in lizing vaših avtomobilov. Pogodbo o lizingu vsakega avtomobila nastavite na zavihku Nastavitve plošče.",
+        "data": {
+          "vehicles": "Vozila",
+          "fuel_entities": "Cene goriv",
+          "maintenance_entities": "Vzdrževanje",
+          "low_range": "Opozorilo o nizkem dosegu"
+        },
+        "data_description": {
+          "vehicles": "Avtomobili za prikaz: katera koli naprava s sledilnikom (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Postaje integracije Carburants France (neobvezno)",
+          "maintenance_entities": "Entitete integracije Maintenance (neobvezno)",
+          "low_range": "Pod tem dosegom se avtomobil označi oranžno"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izberite vsaj eno vozilo."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel je že nastavljen."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Vozila",
+        "data_description": {
+          "vehicles": "Avtomobili za prikaz: katera koli naprava s sledilnikom (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Postaje integracije Carburants France (neobvezno)",
+          "maintenance_entities": "Entitete integracije Maintenance (neobvezno)",
+          "low_range": "Pod tem dosegom se avtomobil označi oranžno"
+        },
+        "data": {
+          "vehicles": "Vozila",
+          "fuel_entities": "Cene goriv",
+          "maintenance_entities": "Vzdrževanje",
+          "low_range": "Opozorilo o nizkem dosegu"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Izberite vsaj eno vozilo."
+    }
+  }
+}

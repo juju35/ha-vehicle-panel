@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Hozzáadja a Járművek panelt az oldalsávhoz: hatótáv, utak, fogyasztás, üzemanyagárak, karbantartás és lízing az autóidhoz. Az egyes autók lízingszerződését a panel Beállítások lapján lehet megadni.",
+        "data": {
+          "vehicles": "Járművek",
+          "fuel_entities": "Üzemanyagárak",
+          "maintenance_entities": "Karbantartás",
+          "low_range": "Alacsony hatótáv figyelmeztetés"
+        },
+        "data_description": {
+          "vehicles": "A megjelenítendő autók: bármely eszköz helykövetővel (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "A Carburants France integráció töltőállomásai (nem kötelező)",
+          "maintenance_entities": "A Maintenance integráció entitásai (nem kötelező)",
+          "low_range": "E hatótáv alatt az autó borostyánszínű jelölést kap"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Válassz legalább egy járművet."
+    },
+    "abort": {
+      "single_instance_allowed": "A Vehicle Panel már be van állítva."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Járművek",
+        "data_description": {
+          "vehicles": "A megjelenítendő autók: bármely eszköz helykövetővel (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "A Carburants France integráció töltőállomásai (nem kötelező)",
+          "maintenance_entities": "A Maintenance integráció entitásai (nem kötelező)",
+          "low_range": "E hatótáv alatt az autó borostyánszínű jelölést kap"
+        },
+        "data": {
+          "vehicles": "Járművek",
+          "fuel_entities": "Üzemanyagárak",
+          "maintenance_entities": "Karbantartás",
+          "low_range": "Alacsony hatótáv figyelmeztetés"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Válassz legalább egy járművet."
+    }
+  }
+}

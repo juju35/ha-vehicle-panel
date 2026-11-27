@@ -1,0 +1,15 @@
+{
+  "domain": "vehicle_panel",
+  "name": "Vehicle Panel",
+  "after_dependencies": ["history"],
+  "codeowners": ["@juju35"],
+  "config_flow": true,
+  "dependencies": ["frontend", "http", "panel_custom"],
+  "documentation": "https://github.com/juju35/ha-vehicle-panel",
+  "integration_type": "service",
+  "iot_class": "calculated",
+  "issue_tracker": "https://github.com/juju35/ha-vehicle-panel/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "1.0.0"
+}

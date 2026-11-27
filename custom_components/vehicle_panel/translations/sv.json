@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Lägger till panelen Fordon i sidofältet: räckvidd, resor, förbrukning, bränslepriser, underhåll och leasing för dina bilar. Leasingavtalet för varje bil ställs in på panelens flik Inställningar.",
+        "data": {
+          "vehicles": "Fordon",
+          "fuel_entities": "Bränslepriser",
+          "maintenance_entities": "Underhåll",
+          "low_range": "Varning för låg räckvidd"
+        },
+        "data_description": {
+          "vehicles": "Bilarna som visas: alla enheter med en enhetsspårare (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stationer från integrationen Carburants France (valfritt)",
+          "maintenance_entities": "Entiteter från integrationen Maintenance (valfritt)",
+          "low_range": "Under denna räckvidd markeras bilen med gult"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Välj minst ett fordon."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel är redan konfigurerat."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Fordon",
+        "data_description": {
+          "vehicles": "Bilarna som visas: alla enheter med en enhetsspårare (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stationer från integrationen Carburants France (valfritt)",
+          "maintenance_entities": "Entiteter från integrationen Maintenance (valfritt)",
+          "low_range": "Under denna räckvidd markeras bilen med gult"
+        },
+        "data": {
+          "vehicles": "Fordon",
+          "fuel_entities": "Bränslepriser",
+          "maintenance_entities": "Underhåll",
+          "low_range": "Varning för låg räckvidd"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Välj minst ett fordon."
+    }
+  }
+}

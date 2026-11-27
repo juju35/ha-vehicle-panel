@@ -1,0 +1,50 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Vehicle Panel",
+        "description": "Dodaje panel Pojazdy do paska bocznego: zasięg, trasy, zużycie, ceny paliw, serwis i leasing Twoich samochodów. Umowę leasingu każdego samochodu ustawia się w karcie Ustawienia panelu.",
+        "data": {
+          "vehicles": "Pojazdy",
+          "fuel_entities": "Ceny paliw",
+          "maintenance_entities": "Serwis",
+          "low_range": "Ostrzeżenie o niskim zasięgu"
+        },
+        "data_description": {
+          "vehicles": "Samochody do pokazania: dowolne urządzenie z lokalizatorem (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stacje integracji Carburants France (opcjonalnie)",
+          "maintenance_entities": "Encje integracji Maintenance (opcjonalnie)",
+          "low_range": "Poniżej tego zasięgu samochód jest oznaczony na pomarańczowo"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Wybierz co najmniej jeden pojazd."
+    },
+    "abort": {
+      "single_instance_allowed": "Vehicle Panel jest już skonfigurowany."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Pojazdy",
+        "data_description": {
+          "vehicles": "Samochody do pokazania: dowolne urządzenie z lokalizatorem (Renault, Tesla, Volvo, Stellantis…)",
+          "fuel_entities": "Stacje integracji Carburants France (opcjonalnie)",
+          "maintenance_entities": "Encje integracji Maintenance (opcjonalnie)",
+          "low_range": "Poniżej tego zasięgu samochód jest oznaczony na pomarańczowo"
+        },
+        "data": {
+          "vehicles": "Pojazdy",
+          "fuel_entities": "Ceny paliw",
+          "maintenance_entities": "Serwis",
+          "low_range": "Ostrzeżenie o niskim zasięgu"
+        }
+      }
+    },
+    "error": {
+      "no_vehicle": "Wybierz co najmniej jeden pojazd."
+    }
+  }
+}

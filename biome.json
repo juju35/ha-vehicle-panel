@@ -1,0 +1,23 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
+  "files": {
+    "includes": ["**/*.js", "**/*.mjs", "!**/dist", "!**/vendor", "!**/node_modules", "!**/*.min.js", "!custom_components/vehicle_panel/frontend/vehicle-panel.js"]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": { "noInnerDeclarations": "off" },
+      "suspicious": { "noAssignInExpressions": "off" },
+      "performance": { "noDynamicNamespaceImportAccess": "off" }
+    }
+  },
+  "formatter": { "enabled": false },
+  "assist": { "enabled": false },
+  "javascript": { "globals": ["customElements", "HTMLElement"] },
+  "overrides": [
+    {
+      "includes": ["src/vehicle-panel/index.js"],
+      "linter": { "rules": { "correctness": { "noUnusedImports": "off" } } }
+    }
+  ]
+}
