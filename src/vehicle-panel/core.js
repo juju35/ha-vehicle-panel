@@ -2,7 +2,7 @@
 // The panel's English strings (the other languages are frontend/i18n/<lang>.json, loaded on demand), its
 // colours, and the helpers every tab uses: escaping, numbers, dates, the language.
 
-export const VEHICLE_PANEL_VERSION = "1.3.0";
+export const VEHICLE_PANEL_VERSION = "1.3.1";
 
 // Languages with a file in frontend/i18n/ (English is built in)
 export const VP_LANGS = ["en", "fr", "de", "es", "it", "nl", "pt", "pl", "sr", "sr-Latn", "ro", "da", "sv", "bg", "ru", "uk", "hu", "sk", "cs", "sl", "lv", "el"];
