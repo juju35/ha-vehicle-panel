@@ -4,7 +4,7 @@
 import { vpEsc, vpFmt, vpKm, vpName, vpNum, vpRelative, vpState } from "./core.js";
 import { vpPictureUrl } from "./discovery.js";
 import { vpLevel, vpLocked, vpRange, vpStatus, vpWhere } from "./model.js";
-import { vpAllTrips, vpBest, vpCanDone, vpCard, vpChecks, vpDirections, vpDriving, vpFuelData, vpStationsFor, vpWeek } from "./rich.js";
+import { vpAllTrips, vpBest, vpCanDone, vpCard, vpCarFuel, vpCheapestFor, vpChecks, vpDirections, vpDriving, vpFuelData, vpWeek } from "./rich.js";
 import { vpTileScene } from "./scene.js";
 
 export const VP_ICON_CAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 16v-4l2-5h14l2 5v4Z"/><circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg>';
@@ -75,15 +75,6 @@ const vpChips = (ctx, v) => {
   return chips.length ? `<div class="chips">${chips.join("")}</div>` : "";
 };
 
-/** The cheapest station selling the first fuel followed (open now when the hours tell), for the low range line. */
-const vpCheapest = (ctx) => {
-  const data = vpFuelData(ctx.hass);
-  const fuel = data.fuels[0];
-  if (!fuel) return null;
-  const s = vpStationsFor(data, fuel.key, ctx.now).find((x) => x.available && x.price != null && x.open?.open !== false);
-  return s ? { ...s, fuel } : null;
-};
-
 /** A vehicle tile of the overview: its scene, name and plate, chips, range and gauge, figures and buttons. */
 export const vpVehicleTile = (ctx, v) => {
   const { hass, t, lang } = ctx;
@@ -93,8 +84,10 @@ export const vpVehicleTile = (ctx, v) => {
   const level = vpLevel(hass, v);
   const mileage = vpKm(hass.states[v.ent.mileage]);
   const low = st.key === "low_range";
-  const cheapest = low ? vpCheapest(ctx) : null;
-  const best = cheapest ? cheapest.price : vpBest(hass, vpFuelData(hass).fuels[0]?.name).price;
+  const data = vpFuelData(hass);
+  const fuel = vpCarFuel(hass, v, data);
+  const cheapest = vpCheapestFor(data, fuel, ctx.now);
+  const best = fuel ? (vpBest(hass, fuel).price ?? cheapest?.price ?? null) : null;
   const tank = Number(v.cfg.tank_l);
   const full = level?.kind === "fuel" && tank > 0 && best != null ? (tank * (100 - level.pct) * best) / 100 : null;
   const minis = [`<div class="mini"><span class="m">${vpEsc(t("mileage"))}</span><b>${mileage != null ? `${vpFmt(mileage, lang)} km` : "—"}</b></div>`];
@@ -139,7 +132,7 @@ const vpCheckRow = (ctx, c) => {
   if (c.kind === "maintenance") {
     const i = c.item;
     const when = i.status === "overdue" ? t("overdue") : i.days_left != null ? t("in_days", { n: i.days_left }) : i.percent != null ? `${i.percent} %` : t("soon");
-    text = `<b>${vpEsc(i.name)}</b>${i.device ? ` · ${vpEsc(i.device)}` : ""} · ${vpEsc(when)}`;
+    text = `<b>${vpEsc(i.device && i.short ? i.short : i.name)}</b>${i.device ? ` · ${vpEsc(i.device)}` : ""} · ${vpEsc(when)}`;
     if (vpCanDone(i)) act = `<button class="btn accent" data-act="done" data-id="${vpEsc(i.id)}" data-label="${vpEsc(i.name)}">${vpEsc(t("done"))}</button>`;
   } else if (c.kind === "range") {
     const s = c.station;
@@ -147,7 +140,7 @@ const vpCheckRow = (ctx, c) => {
     if (s) act = vpDirLink(ctx, s.lat, s.lon);
   } else if (c.kind === "unlocked") {
     text = `<b>${vpEsc(c.v.name)}</b> · ${vpEsc(t("unlocked"))}`;
-    act = `<button class="btn err" data-act="lock" data-id="${vpEsc(c.v.ent.lock)}" data-v="${vpEsc(c.v.id)}">${vpEsc(t("lock"))}</button>`;
+    if (c.v.ent.lock) act = `<button class="btn err" data-act="lock" data-id="${vpEsc(c.v.ent.lock)}" data-v="${vpEsc(c.v.id)}">${vpEsc(t("lock"))}</button>`;
   } else if (c.kind === "tyre") {
     text = `<b>${vpEsc(c.v.name)}</b> · ${vpEsc(t("tyre_low", { tyre: c.tyre.key ? t(c.tyre.key) : t("tyres"), v: `${vpFmt(c.tyre.bar, lang, 1)} bar` }))}`;
     act = `<button class="btn" data-tab="maintenance">${vpEsc(t("tab_maintenance"))}</button>`;
@@ -196,7 +189,7 @@ const vpWeekCard = (ctx) => {
   if (!week && !trips.length) return "";
   const many = ctx.vehicles.filter((v) => vpCard(ctx.hass, v)).length > 1;
   return `<div class="c"><div class="h"><b>${vpEsc(t("last_7_days"))}</b><span>${many ? vpEsc(t("all_cars")) : ""}</span></div>
-    ${week ? `<div class="minis"><div class="mini"><span class="m">${vpEsc(t("driven"))}</span><b>${vpFmt(week.distance, lang)} km</b></div><div class="mini"><span class="m">${vpEsc(t("spent"))}</span><b>${vpEsc(vpMoney(ctx, week.cost, 0))}</b></div><div class="mini"><span class="m">${vpEsc(t("average"))}</span><b>${week.average != null ? `${vpFmt(week.average, lang, 1)} L/100` : "—"}</b></div></div>` : ""}
+    ${week ? `<div class="minis"><div class="mini"><span class="m">${vpEsc(t("driven"))}</span><b>${vpFmt(week.distance, lang)} km</b></div><div class="mini"><span class="m">${vpEsc(t("spent"))}</span><b>${vpEsc(vpMoney(ctx, week.cost, 0))}</b></div><div class="mini"><span class="m">${vpEsc(t("average"))}</span><b>${week.average != null ? `${vpFmt(week.average, lang, 1)} ${week.unit}` : "—"}</b></div></div>` : ""}
     ${trips.length ? `<div class="cap">${vpEsc(t("last_trips"))}</div><div class="list">${trips.map((tr) => vpTripRow(ctx, tr, true)).join("")}</div>` : ""}</div>`;
 };
 

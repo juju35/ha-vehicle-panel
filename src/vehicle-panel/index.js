@@ -13,5 +13,5 @@ import "./panel.js";
 export { VEHICLE_PANEL_VERSION, VP_EN, VP_LANGS, vpFmt, vpLang, vpT } from "./core.js";
 export { vpTyrePos, vpVehicle } from "./discovery.js";
 export { vpDaily, vpLease, vpLevel, vpLocked, vpRange, vpStations, vpStatus, vpUrgency, vpWeekly } from "./model.js";
-export { vpCard, vpChecks, vpDirections, vpFuelData, vpLeaseCurve, vpLeaseInfo, vpMaintenanceItems, vpMonthDriven, vpOpen, vpStationsFor, vpWeek } from "./rich.js";
+export { vpBest, vpCard, vpCarFuel, vpChecks, vpDirections, vpFuelData, vpLeaseCurve, vpLeaseInfo, vpMaintenanceItems, vpMonthDriven, vpOpen, vpStationsFor, vpWeek } from "./rich.js";
 export { VehiclePanel } from "./panel.js";

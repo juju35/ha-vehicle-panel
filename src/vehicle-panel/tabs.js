@@ -8,6 +8,7 @@ import {
   vpBest,
   vpCanDone,
   vpCard,
+  vpCarFuel,
   vpFuelData,
   vpLeaseCurve,
   vpLeaseInfo,
@@ -23,7 +24,7 @@ import { vpBar, vpChart, vpDirLink, vpMoney, vpPct, vpTripRow } from "./views.js
 
 const vpNote = (text) => `<div class="c"><div class="note">${vpEsc(text)}</div></div>`;
 const vpSeg = (attr, list, current) =>
-  `<div class="seg">${list.map(([k, label]) => `<button class="${k === current ? "on" : ""}" data-${attr}="${vpEsc(k)}">${vpEsc(label)}</button>`).join("")}</div>`;
+  `<div class="seg">${list.map(([k, label]) => `<button class="${k === current ? "on" : ""}" aria-pressed="${k === current}" data-${attr}="${vpEsc(k)}">${vpEsc(label)}</button>`).join("")}</div>`;
 const vpMini = (label, value, sub, cls = "") =>
   `<div class="mini"><span class="m">${vpEsc(label)}</span><b class="${cls}">${value}</b>${sub ? `<span class="m ${cls === "good" ? "good" : ""}">${vpEsc(sub)}</span>` : ""}</div>`;
 const vpMonthName = (lang, key, style = "short") => new Intl.DateTimeFormat(lang, { month: style }).format(new Date(`${key}-15T12:00:00`));
@@ -158,7 +159,7 @@ const vpSpark = (points) => {
 
 /** A station's opening, as the line under its name. */
 const vpOpenText = (ctx, s) => {
-  const { t, lang } = ctx;
+  const { t } = ctx;
   if (!s.open) return "";
   if (s.open.always) return t("open_24");
   if (s.open.open) return s.open.closes ? t("open_until", { t: s.open.closes }) : t("open");
@@ -170,7 +171,7 @@ const vpOpenText = (ctx, s) => {
 const vpStationsCard = (ctx, data, fuel) => {
   const { hass, t, lang } = ctx;
   const list = vpStationsFor(data, fuel.key, ctx.now);
-  const best = vpBest(hass, fuel.name);
+  const best = vpBest(hass, fuel);
   const rows = list
     .slice(0, 10)
     .map((s, i) => {
@@ -239,9 +240,6 @@ export const vpFuelTab = (ctx) => {
   const data = vpFuelData(hass);
   const fuel = data.fuels.find((f) => f.key === ctx.fuel) || data.fuels[0];
   const legacy = vpStations(hass, ctx.settings.fuel_entities);
-  const list = fuel ? vpStationsFor(data, fuel.key, ctx.now) : [];
-  const cheapest = list.find((s) => s.available && s.price != null)?.price ?? legacy[0]?.price ?? null;
-  const nearest = list.filter((s) => s.available && s.open?.open !== false && s.distance != null).sort((a, b) => a.distance - b.distance)[0];
   let left = "";
   if (fuel) left = vpStationsCard(ctx, data, fuel);
   else if (legacy.length)
@@ -251,7 +249,7 @@ export const vpFuelTab = (ctx) => {
   else left = vpNote(t("no_fuel"));
   const evs = ctx.vehicles.filter((v) => !v.missing && (v.ent.charging || v.ent.plugged_in || v.charger.length));
   left += evs.map((v) => vpChargingCard(ctx, v)).join("");
-  const best = fuel ? vpBest(hass, fuel.name) : null;
+  const best = fuel ? vpBest(hass, fuel) : null;
   let right = "";
   if (best?.target != null && best.price != null) {
     const at = best.low && best.lowSince ? new Date(best.lowSince) : null;
@@ -267,6 +265,11 @@ export const vpFuelTab = (ctx) => {
       const tank = Number(v.cfg.tank_l);
       const litres = level?.kind === "fuel" && tank > 0 ? (tank * (100 - level.pct)) / 100 : null;
       const low = range != null && range < ctx.settings.low_range;
+      // The car's own fuel (from Vehicle Consumption), not the one picked above
+      const carFuel = vpCarFuel(hass, v, data);
+      const sells = carFuel ? vpStationsFor(data, carFuel.key, ctx.now).filter((s) => s.available && s.price != null) : [];
+      const cheapest = sells[0]?.price ?? legacy[0]?.price ?? null;
+      const nearest = sells.filter((s) => s.open?.open !== false && s.distance != null).sort((a, b) => a.distance - b.distance)[0];
       return `<div class="c"><div class="h"><b>${vpEsc(v.name)}</b><span class="${low ? "warn" : ""}">${range != null ? `${vpFmt(range, lang)} km` : ""}</span></div>
         ${level ? vpBar(level.pct, level.pct < 20 ? "var(--vp-warn)" : "var(--vp-accent)", "thick") : ""}
         ${litres != null ? `<div class="t r"><span>${vpEsc(t("fill_up", { v: `${vpFmt(litres, lang)} L` }))}</span><b>${cheapest != null ? `≈ ${vpEsc(vpMoney(ctx, litres * cheapest, 0))}` : "—"}</b></div>` : ""}
@@ -313,7 +316,7 @@ export const vpMaintenanceTab = (ctx) => {
               ? t("tyres_ok")
               : "";
     rows.push(
-      `<div class="item ${tone}"><span class="dot"></span><span class="txt"><b>${vpEsc(i.name)}</b>${i.device ? ` · ${vpEsc(i.device)}` : ""}<span class="sub">${vpEsc(when)}</span></span>${vpCanDone(i) ? `<button class="btn accent" data-act="done" data-id="${vpEsc(i.id)}" data-label="${vpEsc(i.name)}">${vpEsc(t("done"))}</button>` : ""}</div>`,
+      `<div class="item ${tone}"><span class="dot"></span><span class="txt"><b>${vpEsc(i.device && i.short ? i.short : i.name)}</b>${i.device ? ` · ${vpEsc(i.device)}` : ""}<span class="sub">${vpEsc(when)}</span></span>${vpCanDone(i) ? `<button class="btn accent" data-act="done" data-id="${vpEsc(i.id)}" data-label="${vpEsc(i.name)}">${vpEsc(t("done"))}</button>` : ""}</div>`,
     );
   }
   for (const v of ctx.vehicles) {

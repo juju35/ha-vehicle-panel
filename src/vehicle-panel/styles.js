@@ -48,7 +48,7 @@ export const VP_STYLE = `
   .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:16px; }
   @media (max-width: 860px) { .grid2 { grid-template-columns:minmax(0,1fr); } }
   .c { background:var(--vp-card); border-radius:20px; padding:16px; box-shadow:var(--vp-shadow); min-width:0; display:flex; flex-direction:column; gap:12px; }
-  .h { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+  .h { display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; }
   .h b { font-size:15px; } .h span { font-size:12px; color:var(--vp-muted); }
   .h span.good { color:var(--vp-ok); } .h span.warn { color:var(--vp-warn); } .h span.err { color:var(--vp-err); }
   .t { background:var(--vp-soft); border-radius:12px; padding:9px 12px; font-size:13px; }
