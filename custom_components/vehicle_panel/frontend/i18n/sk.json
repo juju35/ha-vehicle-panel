@@ -143,6 +143,7 @@
   "avg_30": "30-dňový priemer {v}",
   "lowest_30": "najnižšia {v}",
   "target_price": "Cieľová cena",
+  "cheapest_now": "Teraz najlacnejšie",
   "below": "Pod {v}",
   "above": "Nad {v}",
   "under_target": "pod vaším cieľom od {t}",

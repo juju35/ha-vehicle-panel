@@ -279,6 +279,15 @@ test("actions are asked first in the panel: a button, Done, a refuel; saving sen
   assert.equal(p._saveState, "saved");
 });
 
+test("the price totem: the cheapest price of every fuel followed, dashes when out of stock everywhere", () => {
+  const svg = lib.vpTotemSvg([{ key: "e10", name: "E10", price: 1.739 }, { key: "gplc", name: "GPLc", price: null }, { key: "x", name: "<b>Bio", price: 2 }], "fr");
+  assert.ok(svg.includes(">SP95-E10<") && svg.includes(">1,739<") && svg.includes(">----<"));
+  assert.ok(!svg.includes("<b>") && svg.includes("#C62828"));
+  const p = panelFor(hass());
+  const html = p._body(p._ctx(), "fuel");
+  assert.ok(html.includes(lib.VP_EN.cheapest_now) && html.includes('class="totem"'));
+});
+
 test("the version is the same in the bundle and in package.json", () => {
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(lib.VEHICLE_PANEL_VERSION, pkg.version);

@@ -162,6 +162,17 @@ export const VP_STYLE = `
   .btn.err { color:var(--vp-err); border-color:color-mix(in srgb, var(--vp-err) 40%, transparent); }
   a.btn { display:inline-flex; align-items:center; text-decoration:none; }
   label.f input[type="number"] { width:100%; }
+  /* The price totem of the Fuel tab (from the Carburants France card) */
+  .totemrow { display:flex; gap:16px; align-items:flex-start; }
+  .totemrow .list { flex:1; min-width:0; }
+  .totem { width:132px; flex:none; }
+  .vp-tpole { fill:#5f6b7a; } .vp-tbase { fill:#8a96a3; }
+  .vp-tbox { fill:#1d3a5e; } .vp-thead { fill:#e5484d; }
+  .vp-tprix { font:700 4.4px sans-serif; fill:#fff; letter-spacing:.3px; }
+  .vp-trow { fill:#0b0f14; }
+  .vp-tlabel { font:3.3px sans-serif; fill:#cfd6de; }
+  .vp-tprice { font:700 5px ui-monospace, Menlo, monospace; fill:#ffd65a; } .vp-tprice.none { fill:#8a96a3; }
+  @media (max-width: 520px) { .totem { width:96px; } }
   label.check { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; cursor:pointer; grid-column:span 2; }
   label.check input { width:18px; height:18px; margin:1px 0 0; accent-color:var(--vp-accent); flex:none; }
   label.check small { display:block; font-size:12px; color:var(--vp-muted); margin-top:2px; }

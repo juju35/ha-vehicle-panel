@@ -143,6 +143,7 @@
   "avg_30": "30-dages gennemsnit {v}",
   "lowest_30": "lavest {v}",
   "target_price": "Målpris",
+  "cheapest_now": "Billigst lige nu",
   "below": "Under {v}",
   "above": "Over {v}",
   "under_target": "under dit mål siden {t}",

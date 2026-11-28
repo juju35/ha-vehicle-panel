@@ -143,6 +143,7 @@
   "avg_30": "30 napos átlag {v}",
   "lowest_30": "legalacsonyabb {v}",
   "target_price": "Célár",
+  "cheapest_now": "Most a legolcsóbb",
   "below": "{v} alatt",
   "above": "{v} felett",
   "under_target": "a cél alatt {t} óta",

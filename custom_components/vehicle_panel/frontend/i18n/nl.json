@@ -143,6 +143,7 @@
   "avg_30": "30-daags gemiddelde {v}",
   "lowest_30": "laagste {v}",
   "target_price": "Doelprijs",
+  "cheapest_now": "Nu het goedkoopst",
   "below": "Onder {v}",
   "above": "Boven {v}",
   "under_target": "onder je doel sinds {t}",

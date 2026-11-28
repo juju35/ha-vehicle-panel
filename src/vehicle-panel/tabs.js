@@ -20,6 +20,7 @@ import {
   vpService,
   vpStationsFor,
 } from "./rich.js";
+import { VP_FUEL_COLORS, vpTotemSvg } from "./totem.js";
 import { vpBar, vpChart, vpDirLink, vpMoney, vpPct, vpTripRow } from "./views.js";
 
 const vpNote = (text) => `<div class="c"><div class="note">${vpEsc(text)}</div></div>`;
@@ -196,6 +197,24 @@ const vpStationsCard = (ctx, data, fuel) => {
   return `<div class="c"><div class="h"><b>${vpEsc(t("stations_fuel", { f: fuel.name }))}</b>${seg}</div>${rows ? `<div class="list">${rows}</div>` : `<div class="note">${vpEsc(t("no_station_fuel"))}</div>`}${foot ? `<div class="s m">${vpEsc(foot)}</div>` : ""}</div>`;
 };
 
+/** The cheapest price of every fuel followed on the station's totem, with where to find it and the way there. */
+const vpTotemCard = (ctx, data) => {
+  const { t, lang } = ctx;
+  if (!data.fuels.length) return "";
+  const rows = data.fuels.slice(0, 6).map((f) => ({ ...f, station: vpStationsFor(data, f.key, ctx.now).find((s) => s.available && s.price != null) || null }));
+  const lines = rows
+    .map((r) => {
+      const s = r.station;
+      const sub = s ? [s.name, vpOpenText(ctx, s), s.distance != null ? `${vpFmt(s.distance, lang, 1)} km` : ""].filter(Boolean).join(" · ") : t("out_of_stock");
+      return `<div class="item"><span class="dot" style="background:${vpEsc(VP_FUEL_COLORS[r.key] || "#8a96a3")}"></span><span class="txt"><b>${vpEsc(r.name)}</b><span class="sub">${vpEsc(sub)}</span></span>${s ? vpDirLink(ctx, s.lat, s.lon) : ""}</div>`;
+    })
+    .join("");
+  return `<div class="c"><div class="h"><b>${vpEsc(t("cheapest_now"))}</b></div><div class="totemrow">${vpTotemSvg(
+    rows.map((r) => ({ key: r.key, name: r.name, price: r.station?.price ?? null })),
+    lang,
+  )}<div class="list">${lines}</div></div></div>`;
+};
+
 /** When a charge ends: a timestamp sensor, or minutes left. */
 const vpChargeEnd = (ctx, v) => {
   const s = ctx.hass.states[v.ent.charge_time];
@@ -250,7 +269,7 @@ export const vpFuelTab = (ctx) => {
   const evs = ctx.vehicles.filter((v) => !v.missing && (v.ent.charging || v.ent.plugged_in || v.charger.length));
   left += evs.map((v) => vpChargingCard(ctx, v)).join("");
   const best = fuel ? vpBest(hass, fuel) : null;
-  let right = "";
+  let right = vpTotemCard(ctx, data);
   if (best?.target != null && best.price != null) {
     const at = best.low && best.lowSince ? new Date(best.lowSince) : null;
     const since = at ? (at.toDateString() === new Date(ctx.now).toDateString() ? new Intl.DateTimeFormat(lang, { hour: "2-digit", minute: "2-digit" }) : new Intl.DateTimeFormat(lang, { month: "short", day: "numeric" })).format(at) : "";
