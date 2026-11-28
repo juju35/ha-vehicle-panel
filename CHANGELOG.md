@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.1.1 - 2026-11-28
+
+### Fixes
+- The fill-up cost, the cheapest station and the low range check use each car's own fuel (from Vehicle Consumption), no longer the first fuel followed.
+- The best and target prices of SP95 no longer pick those of SP95-E10.
+- An unlocked car is in the list of what to check with a lock sensor only, too (not while it is driving).
+- The last 7 days show kWh/100 km for an electric car.
+- A name with "$" from Home Assistant is shown as it is in the panel's texts.
+- Maintenance items of a device show their short name next to it; card headers wrap on narrow screens.
+
 ## 1.1.0 - 2026-11-28
 
 ### Features

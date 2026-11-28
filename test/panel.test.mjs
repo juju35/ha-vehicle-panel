@@ -126,6 +126,20 @@ test("Carburants France: stations by price, open now from the hours, shortages l
   assert.equal(lib.vpDirections(Number.NaN, 1), null);
 });
 
+test("each car's fuel and the entities of a fuel (SP95 is not SP95-E10)", () => {
+  const data = lib.vpFuelData(hass());
+  assert.equal(lib.vpCarFuel(hass(), vehicle("captur"), data).key, "e10");
+  const diesel = { ...states, "sensor.espace_consumption": { ...states["sensor.espace_consumption"], attributes: { ...states["sensor.espace_consumption"].attributes, fuel_type: "diesel" } } };
+  assert.equal(lib.vpCarFuel(hass({ states: diesel }), vehicle("espace"), data).key, "gazole");
+  const h = hass({
+    entities: { ...entities, "sensor.carburants_best_price_sp95": { entity_id: "sensor.carburants_best_price_sp95", platform: "carburants_france", translation_key: "best_price" } },
+    states: { ...states, "sensor.carburants_best_price_sp95": { entity_id: "sensor.carburants_best_price_sp95", state: "1.801", attributes: {} } },
+  });
+  assert.equal(lib.vpBest(h, { key: "sp95", name: "SP95" }).price, 1.801);
+  assert.equal(lib.vpBest(h, { key: "e10", name: "SP95-E10" }).price, 1.739);
+  assert.equal(lib.vpT(null, "ask_lock", { car: "A$'B" }), "Lock A$'B?");
+});
+
 test("Vehicle Consumption: the lease status, this month, the week, the curve against the contract", () => {
   const h = hass();
   const espace = vehicle("espace");

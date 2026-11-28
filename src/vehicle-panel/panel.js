@@ -1,5 +1,5 @@
 // ── The sidebar panel ──
-import { VEHICLE_PANEL_VERSION, VP_TABS, vpEsc, vpKm, vpLang, vpLoadStrings, vpT } from "./core.js";
+import { VEHICLE_PANEL_VERSION, VP_TABS, vpEsc, vpKm, vpLang, vpNum, vpLoadStrings, vpT } from "./core.js";
 import { vpPictureUrl, vpVehicle } from "./discovery.js";
 import { vpCard, vpFuelData, vpLeaseInfo, vpPriceSensor, vpService, vpStationsFor } from "./rich.js";
 import { vpBarScene } from "./scene.js";
@@ -290,8 +290,9 @@ export class VehiclePanel extends HTMLElement {
     if (act === "select") return call("select", "select_option", { entity_id: id, option: o })();
     if (act === "number") {
       const s = this._hass.states[id];
+      if (vpNum(s) == null) return;
       const step = Number(s?.attributes?.step) || 1;
-      const next = Math.min(Number(s?.attributes?.max ?? Infinity), Math.max(Number(s?.attributes?.min ?? -Infinity), Number(s.state) + Number(o) * step));
+      const next = Math.min(Number(s?.attributes?.max ?? Infinity), Math.max(Number(s?.attributes?.min ?? -Infinity), vpNum(s) + Number(o) * step));
       return call("number", "set_value", { entity_id: id, value: next })();
     }
     if (act === "refuel" && v) {

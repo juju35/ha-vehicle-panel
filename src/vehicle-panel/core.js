@@ -2,7 +2,7 @@
 // The panel's English strings (the other languages are frontend/i18n/<lang>.json, loaded on demand), its
 // colours, and the helpers every tab uses: escaping, numbers, dates, the language.
 
-export const VEHICLE_PANEL_VERSION = "1.1.0";
+export const VEHICLE_PANEL_VERSION = "1.1.1";
 
 // Languages with a file in frontend/i18n/ (English is built in)
 export const VP_LANGS = ["en", "fr", "de", "es", "it", "nl", "pt", "pl", "sr", "sr-Latn", "ro", "da", "sv", "bg", "ru", "uk", "hu", "sk", "cs", "sl", "lv", "el"];
@@ -219,7 +219,8 @@ export const vpLang = (code) => {
 /** A string of `strings` (else English), its {placeholders} filled. */
 export const vpT = (strings, key, vars) => {
   let s = strings?.[key] ?? VP_EN[key] ?? key;
-  for (const [k, v] of Object.entries(vars || {})) s = s.replace(`{${k}}`, v);
+  // A function as the replacement, so that "$&" or "$'" in a name from Home Assistant stays as it is
+  for (const [k, v] of Object.entries(vars || {})) s = s.replace(`{${k}}`, () => String(v));
   return s;
 };
 

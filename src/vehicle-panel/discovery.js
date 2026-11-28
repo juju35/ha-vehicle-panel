@@ -185,15 +185,19 @@ export const vpStationSources = (hass) =>
     .filter((e) => e.platform === "carburants_france" && e.entity_id.startsWith("sensor.") && Array.isArray(hass.states?.[e.entity_id]?.attributes?.stations))
     .map((e) => e.entity_id);
 
-/** The Carburants France entities of a fuel, by translation key (best price, target price, low price). */
-export const vpFuelEntities = (hass, fuelName) => {
+/**
+ * The Carburants France entities of a fuel ({key, name}), by translation key (best price, target price, low price):
+ * by their fuel attribute, else by the fuel's key at the end of the entity ID (sp95 is not sp95_e10).
+ */
+export const vpFuelEntities = (hass, fuel) => {
   const out = {};
-  for (const e of Object.values(hass?.entities || {})) {
-    if (e.platform !== "carburants_france" || !["best_price", "target_price", "low_price"].includes(e.translation_key)) continue;
-    const s = hass.states?.[e.entity_id];
-    if (s && (!fuelName || s.attributes?.fuel === fuelName || e.entity_id.includes(String(fuelName).toLowerCase().replace(/[^a-z0-9]+/g, "_"))))
-      out[e.translation_key] ||= e.entity_id;
-  }
+  if (!fuel?.key) return out;
+  const tail = new RegExp(`_${fuel.key}(?:_\\d+)?$`);
+  const list = Object.values(hass?.entities || {}).filter(
+    (e) => e.platform === "carburants_france" && ["best_price", "target_price", "low_price"].includes(e.translation_key) && hass.states?.[e.entity_id],
+  );
+  for (const e of list) if (hass.states[e.entity_id].attributes?.fuel === fuel.name) out[e.translation_key] ||= e.entity_id;
+  for (const e of list) if (tail.test(e.entity_id)) out[e.translation_key] ||= e.entity_id;
   return out;
 };
 

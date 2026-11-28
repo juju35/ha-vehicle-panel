@@ -4,7 +4,7 @@
 // what to check on the overview.
 import { vpKm, vpNum } from "./core.js";
 import { vpFuelEntities, vpMaintenanceSources, vpStationSources } from "./discovery.js";
-import { vpLease, vpRange, vpTyres } from "./model.js";
+import { vpLease, vpLocked, vpRange, vpTyres } from "./model.js";
 
 const VP_DAY_MS = 86400000;
 // Labels of the tyre positions (index of VP_TYRES)
@@ -85,6 +85,19 @@ export const vpStationsFor = (data, fuel, now = Date.now()) =>
     })
     .sort((a, b) => (a.available !== b.available ? (a.available ? -1 : 1) : (a.price ?? 99) - (b.price ?? 99)));
 
+// The fuels of Carburants France each fuel type of Vehicle Consumption can take, the usual one first
+const VP_FUEL_KEYS = { petrol: ["e10", "sp95", "sp98"], diesel: ["gazole"], lpg: ["gplc"], e85: ["e85", "e10"] };
+
+/** The fuel a car takes among those followed: from its Vehicle Consumption fuel type, else the first followed. */
+export const vpCarFuel = (hass, v, data) => {
+  const keys = VP_FUEL_KEYS[vpCard(hass, v)?.fuel_type] || [];
+  return keys.map((k) => data.fuels.find((f) => f.key === k)).find(Boolean) || data.fuels[0] || null;
+};
+
+/** The cheapest station selling a fuel, in stock and open now when its hours tell. */
+export const vpCheapestFor = (data, fuel, now = Date.now()) =>
+  fuel ? vpStationsFor(data, fuel.key, now).find((s) => s.available && s.price != null && s.open?.open !== false) || null : null;
+
 /** The price sensor of a station and a fuel (for its 30-day line), from its station_id and fuel attributes. */
 export const vpPriceSensor = (hass, stationId, fuelName) =>
   Object.values(hass?.entities || {}).find((e) => {
@@ -93,9 +106,9 @@ export const vpPriceSensor = (hass, stationId, fuelName) =>
     return a && String(a.station_id) === String(stationId) && a.fuel === fuelName;
   })?.entity_id;
 
-/** The best price of a fuel and its 30-day figures, the target price and whether the price is under it. */
-export const vpBest = (hass, fuelName) => {
-  const ids = vpFuelEntities(hass, fuelName);
+/** The best price of a fuel ({key, name}) and its 30-day figures, the target price and whether the price is under it. */
+export const vpBest = (hass, fuel) => {
+  const ids = vpFuelEntities(hass, fuel);
   const best = hass.states?.[ids.best_price];
   const target = vpNum(hass.states?.[ids.target_price]);
   const a = best?.attributes || {};
@@ -255,6 +268,7 @@ export const vpWeek = (hass, vehicles, now = Date.now()) => {
   const from = now - 7 * VP_DAY_MS;
   let distance = 0;
   let fuel = 0;
+  let energy = 0;
   let cost = null;
   let n = 0;
   for (const t of vpAllTrips(hass, vehicles)) {
@@ -262,9 +276,12 @@ export const vpWeek = (hass, vehicles, now = Date.now()) => {
     n++;
     distance += Number(t.distance) || 0;
     fuel += Number(t.fuel) || 0;
+    energy += Number(t.energy) || 0;
     if (t.cost != null) cost = (cost || 0) + Number(t.cost);
   }
-  return n ? { distance, cost, average: distance >= 5 && fuel > 0 ? (fuel / distance) * 100 : null, trips: n } : null;
+  // The average of the main energy: fuel when any was used, else electricity
+  const used = fuel > 0 ? fuel : energy;
+  return n ? { distance, cost, average: distance >= 5 && used > 0 ? (used / distance) * 100 : null, unit: fuel > 0 ? "L/100" : "kWh/100", trips: n } : null;
 };
 
 /** The values of the 12-month chart for a metric: consumption, distance, cost or CO₂ (oldest first). */
@@ -296,12 +313,8 @@ export const vpChecks = (hass, vehicles, settings, now = Date.now()) => {
     if (v.missing) continue;
     const range = vpRange(hass, v);
     const charging = hass.states?.[v.ent.charging]?.state === "on";
-    if (range != null && range < settings.low_range && !charging) {
-      const fuel = data.fuels[0]?.key;
-      const station = fuel ? vpStationsFor(data, fuel, now).find((s) => s.available && s.open?.open !== false) : null;
-      out.push({ tone: "warn", kind: "range", v, range, station });
-    }
-    if (hass.states?.[v.ent.lock]?.state === "unlocked") out.push({ tone: "warn", kind: "unlocked", v });
+    if (range != null && range < settings.low_range && !charging) out.push({ tone: "warn", kind: "range", v, range, station: vpCheapestFor(data, vpCarFuel(hass, v, data), now) });
+    if (vpLocked(hass, v) === false && !vpDriving(hass, v)) out.push({ tone: "warn", kind: "unlocked", v });
     const tyre = vpLowTyre(hass, v);
     if (tyre) out.push({ tone: "warn", kind: "tyre", v, tyre });
     const lease = vpLeaseInfo(hass, v, now);
