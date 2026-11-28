@@ -64,6 +64,8 @@
   "s_consumption": "Dispozitiv Vehicle Consumption",
   "s_data": "Dispozitiv Orange Internet On the move",
   "s_low_range": "Alertă autonomie redusă (km)",
+  "s_location_admins": "Locația vehiculelor doar pentru administratori",
+  "s_location_admins_hint": "Ceilalți utilizatori nu văd locul, harta sau indicațiile către mașini în acest panou. Trackerele lor rămân vizibile în alte locuri din Home Assistant.",
   "s_auto": "Automat",
   "save": "Salvează",
   "saved": "Salvat",

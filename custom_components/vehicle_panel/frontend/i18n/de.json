@@ -64,6 +64,8 @@
   "s_consumption": "Gerät Vehicle Consumption",
   "s_data": "Gerät Orange Internet On the move",
   "s_low_range": "Warnung bei geringer Reichweite (km)",
+  "s_location_admins": "Standort der Fahrzeuge nur für Administratoren",
+  "s_location_admins_hint": "Andere Benutzer sehen in diesem Panel weder den Ort noch die Karte noch die Route zu den Autos. Ihre Tracker bleiben an anderer Stelle in Home Assistant sichtbar.",
   "s_auto": "Automatisch",
   "save": "Speichern",
   "saved": "Gespeichert",

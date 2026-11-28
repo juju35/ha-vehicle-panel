@@ -86,7 +86,7 @@ async def test_settings_command_for_every_user(hass: HomeAssistant, hass_ws_clie
     await client.send_json_auto_id({"type": f"{DOMAIN}/settings"})
     res = await client.receive_json()
     assert res["success"]
-    assert res["result"]["settings"] == OPTIONS
+    assert res["result"]["settings"] == {**OPTIONS, "location_admins_only": False}
     await client.send_json_auto_id({"type": f"{DOMAIN}/update_settings", "low_range": 50})
     res = await client.receive_json()
     assert not res["success"] and res["error"]["code"] == "unauthorized"
@@ -103,12 +103,14 @@ async def test_update_settings(hass: HomeAssistant, hass_ws_client):
                 {"x": 1},
             ],
             "low_range": 120,
+            "location_admins_only": True,
         }
     )
     res = await client.receive_json()
     assert res["success"] and res["result"]["ok"]
     assert entry.options["vehicles"] == [{"device_id": "car1", "lease_km": 50000, "tank_l": 55}]
     assert entry.options["low_range"] == 120
+    assert entry.options["location_admins_only"] is True
     await client.send_json_auto_id({"type": f"{DOMAIN}/update_settings", "low_range": 5000})
     res = await client.receive_json()
     assert not res["success"]
@@ -138,4 +140,10 @@ def test_helpers():
         {"device_id": "b"},
         {"device_id": "a", "tank_l": 50},
     ]
-    assert settings(None) == {"vehicles": [], "fuel_entities": [], "maintenance_entities": [], "low_range": 100}
+    assert settings(None) == {
+        "vehicles": [],
+        "fuel_entities": [],
+        "maintenance_entities": [],
+        "low_range": 100,
+        "location_admins_only": False,
+    }

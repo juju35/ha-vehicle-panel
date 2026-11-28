@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.0 - 2026-11-28
+
+### Features
+- Settings: the vehicles' location can be for administrators only. The other users then don't see the place, the map or the directions to the cars in the panel.
+
 ## 1.2.0 - 2026-11-28
 
 ### Features

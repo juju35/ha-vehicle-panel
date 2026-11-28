@@ -64,6 +64,8 @@
   "s_consumption": "Enhed Vehicle Consumption",
   "s_data": "Enhed Orange Internet On the move",
   "s_low_range": "Advarsel om lav rækkevidde (km)",
+  "s_location_admins": "Køretøjernes placering kun for administratorer",
+  "s_location_admins_hint": "Andre brugere ser hverken stedet, kortet eller vejen til bilerne i dette panel. Deres trackere er stadig synlige andre steder i Home Assistant.",
   "s_auto": "Automatisk",
   "save": "Gem",
   "saved": "Gemt",

@@ -64,6 +64,8 @@
   "s_consumption": "Uređaj Vehicle Consumption",
   "s_data": "Uređaj Orange Internet On the move",
   "s_low_range": "Upozorenje za mali domet (km)",
+  "s_location_admins": "Lokacija vozila samo za administratore",
+  "s_location_admins_hint": "Ostali korisnici u ovom panelu ne vide mesto, mapu ni putanju do automobila. Njihovi tragači ostaju vidljivi na drugim mestima u Home Assistant-u.",
   "s_auto": "Automatski",
   "save": "Sačuvaj",
   "saved": "Sačuvano",

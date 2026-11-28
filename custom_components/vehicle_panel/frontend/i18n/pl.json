@@ -64,6 +64,8 @@
   "s_consumption": "Urządzenie Vehicle Consumption",
   "s_data": "Urządzenie Orange Internet On the move",
   "s_low_range": "Ostrzeżenie o niskim zasięgu (km)",
+  "s_location_admins": "Lokalizacja pojazdów tylko dla administratorów",
+  "s_location_admins_hint": "Pozostali użytkownicy nie widzą w tym panelu miejsca, mapy ani trasy do aut. Ich lokalizatory pozostają widoczne w innych miejscach Home Assistant.",
   "s_auto": "Automatycznie",
   "save": "Zapisz",
   "saved": "Zapisano",

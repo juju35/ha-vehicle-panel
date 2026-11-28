@@ -162,4 +162,8 @@ export const VP_STYLE = `
   .btn.err { color:var(--vp-err); border-color:color-mix(in srgb, var(--vp-err) 40%, transparent); }
   a.btn { display:inline-flex; align-items:center; text-decoration:none; }
   label.f input[type="number"] { width:100%; }
+  label.check { display:flex; align-items:flex-start; gap:10px; font-size:13.5px; cursor:pointer; grid-column:span 2; }
+  label.check input { width:18px; height:18px; margin:1px 0 0; accent-color:var(--vp-accent); flex:none; }
+  label.check small { display:block; font-size:12px; color:var(--vp-muted); margin-top:2px; }
+  @media (max-width: 600px) { label.check { grid-column:auto; } }
 `;
