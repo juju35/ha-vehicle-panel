@@ -59,14 +59,15 @@ Pick your cars once: the panel finds their entities by itself, whatever the inte
 ## Features
 
 - A **Vehicles** entry in the sidebar, for every user, with one tab each: Overview, Trips, Consumption, Fuel, Maintenance, Lease and Settings
-- An illustrated header with your cars parked by the road (their own photo when the integration gives one), and a status pill: all locked, unlocked, low range
-- **Overview**: a tile per car with its picture, range, fuel or battery level, mileage, tyres, data plan, location and its action buttons (horn, flash lights, air conditioning…), plus the consumption, lease, fuel and maintenance cards
-- **Trips**: kilometres driven today, this week and day by day over the last 7 days, from the mileage history
-- **Consumption**: the week's average, distance, trips and cost, and an 8-week chart with its peak (with Vehicle Consumption)
-- **Fuel**: your stations sorted by price, and what a full tank of each car costs (with Carburants France)
-- **Maintenance**: the tasks of the Maintenance integration, overdue and due soon first, and the tyre pressures of each car
-- **Lease** (LOA): kilometres driven against the contract, expected at this date, the end-of-contract projection and the monthly allowance left
-- **Settings**: a name, lease contract, tank, picture and optional devices per car, and the low range alert, saved for every user (administrators only)
+- An illustrated header with your cars parked by the road (their own photo when the integration gives one), and a status pill: all locked, unlocked, low range, driving
+- **Overview**: a tile per car with its picture and plate, chips (lock, place and last update, driving, outside temperature, doors, charging), range and gauge with the cost of a full tank, mileage, data plan and its renewal, and every button of the car; where the cars are, on Home Assistant's own map, with directions; one list of what to check, each with its action (Done, Directions, Lock, Log); the last 7 days and the last trips
+- **Every action is asked first** in the panel (a button of the car, lock, unlock, Done, a refuel, a service)
+- **Trips**: kilometres driven today, this week and day by day over the last 7 days, and each car's recent trips
+- **Consumption** (with Vehicle Consumption): the month's consumption against the average, distance, cost and cost per km, CO₂, trips and next service; a 12-month chart of the consumption, distance, cost or CO₂; the recent trips; the refuels (or charges), with **Log a refuel**
+- **Fuel** (with Carburants France): the stations of a fuel with their brand, opening hours, distance, 30-day price line, shortages and directions; the best price against the month; the target price; what each car's fill-up costs and the nearest open station; **charging** for an electric or plug-in car and a home charger (battery, end of charge, power, the charger's switches, modes and current)
+- **Maintenance**: the vehicle tasks of the Maintenance integration with **Done**, the next service of Vehicle Consumption with **Log**, and each car's tyre pressures around the car seen from above, a low one flagged
+- **Lease** (LOA), only the cars with a contract (the tab is hidden without one): the gap to the pace, kilometres left this month and per month to the end, the projection at the recent pace, the excess cost, and the mileage drawn against the contract
+- **Settings**: a name, plate, lease contract and price of an extra km, tank, picture and optional devices (consumption, data plan, home charger) per car, and the low range alert, saved for every user (administrators only)
 - Several vehicles, of different brands, side by side
 - Automatic entity discovery from the device, for [18 car integrations](#supported-integrations) (whatever the entity IDs or the Home Assistant language)
 - English, French, German, Spanish, Serbian (Cyrillic and Latin), Italian, Dutch, European Portuguese, Polish, Romanian, Danish, Swedish, Bulgarian, Russian, Ukrainian, Hungarian, Slovak, Czech, Slovenian, Latvian and Greek, follows the Home Assistant language
@@ -97,9 +98,9 @@ Optional integrations:
 | Integration | What the panel shows |
 |---|---|
 | <img src="https://raw.githubusercontent.com/juju35/ha-vehicle-panel/main/images/brands/renault.svg" alt="" width="16"> [Renault Picture](https://github.com/juju35/ha-renault-picture) (Marketplace) | The official MyRenault photo of the vehicle, in the header and on its tile |
-| [Vehicle Consumption](https://github.com/juju35/ha-vehicle-consumption) (Marketplace) | Average consumption, distance, trips and cost of the week, and the 8-week consumption chart |
-| [Carburants France](https://github.com/juju35/ha-carburants-france) (Marketplace) | The fuel prices of your stations, the cheapest first, and the cost of a full tank |
-| [Maintenance](https://github.com/juju35/ha-maintenance) (Marketplace) | The maintenance tasks (oil change, inspection, tyres…), overdue and due soon first |
+| [Vehicle Consumption](https://github.com/juju35/ha-vehicle-consumption) (Marketplace) | The month's figures, the 12-month chart, the trips, the refuels and charges (and logging one), the next service (and logging it), the lease status, whether the car is driving |
+| [Carburants France](https://github.com/juju35/ha-carburants-france) (Marketplace) | The stations of each fuel (found by themselves), opening hours, shortages, 30-day prices, the target price, directions |
+| [Maintenance](https://github.com/juju35/ha-maintenance) (Marketplace) | The tasks of the vehicle category (found by themselves), overdue and due soon first, marked done from the panel |
 | <img src="https://raw.githubusercontent.com/juju35/ha-vehicle-panel/main/images/orange.svg" alt="" width="16"> [Orange Internet On the move](https://github.com/juju35/ha-orange-internet-on-the-move) (Marketplace) | Data left on the car's data plan |
 
 ## Prerequisites
@@ -153,17 +154,20 @@ The vehicles, the fuel stations, the maintenance entities and the low range aler
 | Setting | What it does |
 |---|---|
 | Name | The name shown in the panel (default: the device's name) |
-| Contract mileage, duration, start and mileage at the start | The lease contract the Lease tab follows |
+| Plate | The plate shown on the car's tile |
+| Contract mileage, duration, start and mileage at the start | The lease contract the Lease tab follows (Vehicle Consumption's lease, when it has one, comes first) |
+| Price of an extra km | The excess cost of the projected kilometres over the contract |
 | Tank | The tank capacity in litres: the fuel level from the fuel quantity, and the cost of a full tank |
 | Picture | The `image` or `sensor` entity whose picture is shown (default: found from the device, e.g. Renault Picture) |
 | Vehicle Consumption device, Orange Internet On the move device | The devices of the optional integrations (default: the one whose name matches the car) |
+| Home charger device | The charger whose controls the Fuel tab shows with the car |
 | Low range alert | Below this range (km), the status turns amber (default 100 km) |
 
 ## How it works
 
 The integration registers the panel and keeps its settings in its config entry. The panel reads the device and entity registries the frontend already has, lists the entities of each chosen device and matches each one by its translation key, then by its entity ID (English and French slugs), then by its device class, so renamed entities and entity IDs in another language are supported. Everything the device exposes as a `button` becomes an action button (`button.press`).
 
-The devices of Vehicle Consumption and Orange Internet On the move are linked to the car whose name or model they carry, and the Renault Picture entity to its device; each can be set by hand in the Settings tab. The trips and the consumption chart come from the recorder's history (8 days of mileage, 8 weeks of average consumption), fetched again every 10 minutes at most.
+The devices of Vehicle Consumption and Orange Internet On the move are linked to the car whose name or model they carry, and the Renault Picture entity to its device; each can be set by hand in the Settings tab. The 7-day bars and the station price lines come from the recorder's history (8 days of mileage, 8 weeks of average consumption, 30 days of the prices of the fuel shown), and the lease chart and this month's kilometres from the monthly statistics of the mileage, fetched again every 10 minutes at most. The Stations sensors of Carburants France and the sensor of Maintenance that carries its items are found by themselves; the fuel and maintenance entities picked in the options are still shown when those are missing. Directions open Google Maps.
 
 ## Development
 

@@ -1,7 +1,7 @@
 """Constants for the Vehicle Panel integration."""
 
 DOMAIN = "vehicle_panel"
-VERSION = "1.0.0"
+VERSION = "1.1.0"
 
 # Files served by the integration, and the sidebar panel (its own path, not /vehicle_panel,
 # so the frontend's panel route never shadows the files)
@@ -47,16 +47,20 @@ CONF_FUEL_ENTITIES = "fuel_entities"
 CONF_MAINTENANCE_ENTITIES = "maintenance_entities"
 CONF_LOW_RANGE = "low_range"
 CONF_DEVICE_ID = "device_id"
-# Per vehicle (all optional): a name, the lease contract, the tank, and the devices of the optional integrations
+# Per vehicle (all optional): a name and plate, the lease contract (and the price of a kilometre over it), the tank,
+# and the devices of the optional integrations (consumption, data plan, home charger)
 VEHICLE_KEYS = {
     "name": str,
+    "plate": str,
     "lease_km": int,
     "lease_months": int,
     "lease_start": str,
     "lease_start_km": int,
+    "extra_km_price": float,
     "tank_l": int,
     "picture_entity": str,
     "consumption_device": str,
     "data_device": str,
+    "charger_device": str,
 }
 DEFAULT_LOW_RANGE = 100

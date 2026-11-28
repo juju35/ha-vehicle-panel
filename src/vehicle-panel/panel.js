@@ -1,9 +1,11 @@
 // ── The sidebar panel ──
-import { VEHICLE_PANEL_VERSION, VP_TABS, vpEsc, vpLang, vpLoadStrings, vpT } from "./core.js";
+import { VEHICLE_PANEL_VERSION, VP_TABS, vpEsc, vpKm, vpLang, vpLoadStrings, vpT } from "./core.js";
 import { vpPictureUrl, vpVehicle } from "./discovery.js";
+import { vpCard, vpFuelData, vpLeaseInfo, vpPriceSensor, vpService, vpStationsFor } from "./rich.js";
 import { vpBarScene } from "./scene.js";
 import { VP_STYLE } from "./styles.js";
-import { VP_ICON_CAR, vpConsumptionTab, vpFuelTab, vpHeadStatus, vpLeaseTab, vpMaintenanceTab, vpOverview, vpSettingsTab, vpTrips } from "./views.js";
+import { vpConsumptionTab, vpFuelTab, vpLeaseTab, vpMaintenanceTab, vpTrips } from "./tabs.js";
+import { VP_ICON_CAR, vpHeadStatus, vpOverview, vpSettingsTab } from "./views.js";
 
 const VP_VIEWS = { overview: vpOverview, trips: vpTrips, consumption: vpConsumptionTab, fuel: vpFuelTab, maintenance: vpMaintenanceTab, lease: vpLeaseTab, settings: vpSettingsTab };
 // The history behind the charts is fetched again after this long
@@ -64,6 +66,11 @@ export class VehiclePanel extends HTMLElement {
       this.shadowRoot.addEventListener("click", (ev) => this._onClick(ev));
       this.shadowRoot.addEventListener("input", (ev) => this._onInput(ev));
       this.shadowRoot.addEventListener("change", (ev) => this._onInput(ev));
+      this.shadowRoot.addEventListener("keydown", (ev) => {
+        if (!this._dialog) return;
+        if (ev.key === "Escape") this._close();
+        else if (ev.key === "Enter" && ev.composedPath()[0]?.tagName === "INPUT") this._confirm();
+      });
     }
     const lang = this._lang();
     const [strings, res] = await Promise.all([vpLoadStrings(lang), this._hass.callWS({ type: "vehicle_panel/settings" }).catch(() => null)]);
@@ -82,7 +89,10 @@ export class VehiclePanel extends HTMLElement {
     return this._draft?.vehicles?.[cfg.device_id] ? { ...cfg, ...this._draft.vehicles[cfg.device_id] } : cfg;
   }
 
-  /** The recorder's history behind the charts: the mileage (7 days) and the average consumption (8 weeks). */
+  /**
+   * The recorder's data behind the charts: the mileage (8 days), the average consumption (8 weeks), the 30-day price
+   * of the stations of the fuel shown, and the monthly mileage statistics (this month, and the lease contracts).
+   */
   async _fetchHistory() {
     if (!this._hass?.callWS || Date.now() - this._historyAt < VP_HISTORY_TTL) return;
     this._historyAt = Date.now();
@@ -104,8 +114,22 @@ export class VehiclePanel extends HTMLElement {
         return {};
       }
     };
-    const [miles, cons] = await Promise.all([ask(vs.map((v) => v.ent.mileage).filter(Boolean), 8), ask(vs.map((v) => v.consumption?.average).filter(Boolean), 56)]);
-    this._history = { ...miles, ...cons };
+    const data = vpFuelData(this._hass);
+    const fuel = data.fuels.find((f) => f.key === this._fuel) || data.fuels[0];
+    const prices = fuel ? vpStationsFor(data, fuel.key, now).map((s) => vpPriceSensor(this._hass, s.id, fuel.name)).filter(Boolean) : [];
+    const monthStart = new Date(now);
+    monthStart.setDate(1);
+    monthStart.setHours(0, 0, 0, 0);
+    const from = Math.min(monthStart.getTime() - 86400000, ...vs.map((v) => vpLeaseInfo(this._hass, v, now)?.start).filter(Number.isFinite));
+    const mileages = vs.map((v) => v.ent.mileage).filter(Boolean);
+    const stats = mileages.length
+      ? this._hass
+          .callWS({ type: "recorder/statistics_during_period", start_time: new Date(from - 31 * 86400000).toISOString(), period: "month", statistic_ids: mileages, types: ["state"], units: { distance: "km" } })
+          .catch(() => ({}))
+      : Promise.resolve({});
+    const [miles, cons, price, st] = await Promise.all([ask(mileages, 8), ask(vs.map((v) => v.consumption?.average).filter(Boolean), 56), ask(prices, 30), stats]);
+    this._history = { ...miles, ...cons, ...price };
+    this._stats = st || {};
     this._sig = null;
     this._render();
   }
@@ -123,25 +147,68 @@ export class VehiclePanel extends HTMLElement {
       uid: this._uid,
       pressed: this._pressed,
       saveState: this._saveState,
+      stats: this._stats || {},
+      maps: typeof window.loadCardHelpers === "function",
+      cveh: this._cveh,
+      metric: this._metric,
+      fuel: this._fuel,
     };
+  }
+
+  /** The tabs shown: Lease only when a car has a contract. */
+  _tabs(ctx) {
+    const lease = ctx.vehicles.some((v) => vpLeaseInfo(this._hass, v, ctx.now));
+    return VP_TABS.filter((k) => k !== "lease" || lease);
   }
 
   _render() {
     if (!this.shadowRoot || !this._hass || !this._settings) return;
-    const tab = this._tab();
+    // A dialog with fields stays as it is while it is open, so that what is typed in it is kept
+    if (this._dialog?.fields && this._sig && this.shadowRoot.querySelector?.(".dialog")) return;
     const ctx = this._ctx();
+    const tabs = this._tabs(ctx);
+    const tab = tabs.includes(this._tab()) ? this._tab() : "overview";
     // The Settings tab is drawn again only when its tab, draft or vehicles change (not on every state), so that a
     // field being typed in keeps its focus.
-    const body = tab === "settings" && this._settingsHtml && this._lastTab === "settings" && !this._settingsDirty ? this._settingsHtml : this._body(ctx, tab);
+    let body;
+    if (tab === "settings" && this._settingsHtml && this._lastTab === "settings" && !this._settingsDirty) body = this._settingsHtml;
+    else body = this._body(ctx, tab);
     if (tab === "settings") {
       this._settingsHtml = body;
       this._settingsDirty = false;
     }
-    const html = this._frame(ctx, tab, body);
-    if (html === this._sig) return;
-    this._sig = html;
-    this._lastTab = tab;
-    this.shadowRoot.innerHTML = html;
+    const html = this._frame(ctx, tabs, tab, body);
+    if (html !== this._sig) {
+      this._sig = html;
+      this._lastTab = tab;
+      this.shadowRoot.innerHTML = html;
+      this.shadowRoot.querySelector?.(".dialog [data-autofocus]")?.focus?.();
+    }
+    this._mountMap(ctx);
+  }
+
+  /** Home Assistant's own map card with every car's tracker, in the overview's slot. */
+  async _mountMap(ctx) {
+    const slot = this.shadowRoot.querySelector?.(".vp-map");
+    if (!slot || !ctx.maps) return;
+    const ids = ctx.vehicles.filter((v) => !v.missing && v.ent.location).map((v) => v.ent.location);
+    const key = ids.join(",");
+    if (!this._map || this._mapKey !== key) {
+      if (this._mapLoading) return;
+      this._mapLoading = true;
+      try {
+        const helpers = await window.loadCardHelpers();
+        this._map = helpers.createCardElement({ type: "map", entities: ids, hours_to_show: 0, theme_mode: "auto" });
+        this._mapKey = key;
+      } catch {
+        this._mapLoading = false;
+        return;
+      }
+      this._mapLoading = false;
+    }
+    this._map.hass = this._hass;
+    const current = this.shadowRoot.querySelector?.(".vp-map");
+    if (current && this._map.parentNode !== current) current.appendChild(this._map);
   }
 
   _body(ctx, tab) {
@@ -149,28 +216,163 @@ export class VehiclePanel extends HTMLElement {
     return VP_VIEWS[tab](ctx);
   }
 
-  _frame(ctx, tab, body) {
+  _frame(ctx, tabs, tab, body) {
     const status = vpHeadStatus(ctx);
     const pics = ctx.vehicles.filter((v) => !v.missing).map((v) => vpPictureUrl(this._hass, v.picture));
     const names = ctx.vehicles.filter((v) => !v.missing).map((v) => v.name);
     const sub = [this._t("vehicles_count", { n: names.length }), names.join(", ")].filter(Boolean).join(" · ");
-    const tabs = VP_TABS.map((k) => `<button class="tab ${k === tab ? "active" : ""}" data-tab="${k}">${vpEsc(this._t(`tab_${k}`))}</button>`).join("");
+    const nav = tabs.map((k) => `<button class="tab ${k === tab ? "active" : ""}" data-tab="${k}" role="tab" aria-selected="${k === tab}">${vpEsc(this._t(`tab_${k}`))}</button>`).join("");
     return `<style>${VP_STYLE}</style>
       <div class="banner ${ctx.night ? "night" : ""}">${vpBarScene(pics)}<div class="road"></div>
-        <div class="htext">${this._narrow ? '<ha-menu-button></ha-menu-button>' : ""}
+        <div class="htext">${this._narrow ? "<ha-menu-button></ha-menu-button>" : ""}
           <div class="hicon" style="${status?.tone === "warn" ? "--vp-st:var(--vp-warn)" : status ? "--vp-st:var(--vp-ok)" : ""}">${VP_ICON_CAR}</div>
           <div class="tt"><div class="trow"><span class="htitle">${vpEsc(this._t("title"))}</span>${status ? `<span class="pill ${status.tone}"><span class="dot"></span>${vpEsc(status.text)}</span>` : ""}</div>
           <div class="hsub">${vpEsc(sub)}</div></div></div></div>
-      <nav class="tabs" role="tablist">${tabs}</nav>
-      <main>${body}</main>`;
+      <nav class="tabs" role="tablist">${nav}</nav>
+      <main>${body}</main>${this._dialogHtml()}`;
+  }
+
+  /** The dialog asked before an action: a question, or a small form (refuel, service). */
+  _dialogHtml() {
+    const d = this._dialog;
+    if (!d) return "";
+    const fields = (d.fields || [])
+      .map(
+        (f, i) =>
+          `<label class="f">${vpEsc(this._t(f.label))}<input type="number" min="0" step="any" inputmode="decimal" name="${vpEsc(f.name)}" value="${vpEsc(f.value ?? "")}" ${i === 0 ? "data-autofocus" : ""}></label>`,
+      )
+      .join("");
+    return `<div class="scrim" data-act="cancel"></div><div class="dialog" role="dialog" aria-modal="true" aria-label="${vpEsc(d.title || d.text)}">
+      ${d.title ? `<b>${vpEsc(d.title)}</b>` : ""}${d.text ? `<div class="s">${vpEsc(d.text)}</div>` : ""}
+      ${fields ? `<div class="form">${fields}</div>` : ""}${d.error ? `<div class="s err">${vpEsc(this._t(d.error))}</div>` : ""}
+      <div class="acts end"><button class="btn" data-act="cancel">${vpEsc(this._t("cancel"))}</button><button class="btn ${d.danger ? "err" : "accent"}" data-act="ok" ${fields ? "" : "data-autofocus"}>${vpEsc(this._t(d.ok || "confirm"))}</button></div></div>`;
   }
 
   _onClick(ev) {
-    const el = ev.composedPath().find((n) => n?.dataset && (n.dataset.tab || n.dataset.press || n.dataset.save !== undefined));
-    if (!el) return;
+    const path = ev.composedPath();
+    const el = path.find((n) => n?.dataset && (n.dataset.tab || n.dataset.act || n.dataset.save !== undefined || n.dataset.cveh || n.dataset.metric || n.dataset.fuel || n.dataset.stop !== undefined));
+    if (!el || el.dataset.stop !== undefined) return;
     if (el.dataset.tab) return this._go(el.dataset.tab);
-    if (el.dataset.press) return this._press(el.dataset.press);
     if (el.dataset.save !== undefined) return this._save();
+    if (el.dataset.cveh) return this._set("_cveh", el.dataset.cveh);
+    if (el.dataset.metric) return this._set("_metric", el.dataset.metric);
+    if (el.dataset.fuel) {
+      this._set("_fuel", el.dataset.fuel);
+      this._historyAt = 0;
+      return this._fetchHistory();
+    }
+    return this._act(el);
+  }
+
+  _set(key, value) {
+    this[key] = value;
+    this._sig = null;
+    this._render();
+  }
+
+  _vehicle(id) {
+    return this._vehicles().find((v) => v.id === id);
+  }
+
+  /** An action of a button: asked first in the panel, then run. */
+  _act(el) {
+    const { act, id, v: vid, label, o } = el.dataset;
+    const t = (k, vars) => this._t(k, vars);
+    const v = vid ? this._vehicle(vid) : null;
+    const call = (domain, service, data) => () => this._hass.callService(domain, service, data);
+    if (act === "cancel") return this._close();
+    if (act === "ok") return this._confirm();
+    if (act === "press") return this._open({ text: t("ask_press", { name: label, car: v?.name || "" }), run: () => this._press(id) });
+    if (act === "lock") return this._open({ text: t("ask_lock", { car: v?.name || "" }), ok: "lock", run: call("lock", "lock", { entity_id: id }) });
+    if (act === "unlock") return this._open({ text: t("ask_unlock", { car: v?.name || "" }), ok: "unlock", danger: true, run: call("lock", "unlock", { entity_id: id }) });
+    if (act === "done") return this._open({ text: t("ask_done", { name: label }), ok: "done", run: call("maintenance", "done", { item: id }) });
+    if (act === "toggle") return this._open({ text: t("ask_toggle", { name: label }), run: call("switch", "toggle", { entity_id: id }) });
+    if (act === "select") return call("select", "select_option", { entity_id: id, option: o })();
+    if (act === "number") {
+      const s = this._hass.states[id];
+      const step = Number(s?.attributes?.step) || 1;
+      const next = Math.min(Number(s?.attributes?.max ?? Infinity), Math.max(Number(s?.attributes?.min ?? -Infinity), Number(s.state) + Number(o) * step));
+      return call("number", "set_value", { entity_id: id, value: next })();
+    }
+    if (act === "refuel" && v) {
+      const card = vpCard(this._hass, v);
+      const charge = !card?.refuels?.length && (card?.charges?.length || card?.kind === "electric");
+      const mileage = vpKm(this._hass.states[v.ent.mileage]);
+      return this._open({
+        title: t(charge ? "log_charge" : "log_refuel"),
+        text: v.name,
+        ok: "save",
+        fields: [
+          { name: "amount", label: charge ? "f_energy" : "f_liters" },
+          { name: "cost", label: "f_cost" },
+          { name: "price", label: "f_price", value: charge ? card?.electricity_price : card?.fuel_price },
+          { name: "odometer", label: "f_odometer", value: mileage != null ? Math.round(mileage) : "" },
+        ],
+        run: (f) => {
+          if (!(f.amount > 0)) throw new Error("need_amount");
+          const data = { config_entry_id: card.entry_id, [charge ? "energy" : "liters"]: f.amount };
+          for (const k of ["cost", "price", "odometer"]) if (f[k] != null) data[k] = f[k];
+          return this._hass.callService("vehicle_consumption", charge ? "add_charge" : "add_refuel", data);
+        },
+      });
+    }
+    if (act === "log" && v) {
+      const card = vpCard(this._hass, v);
+      const service = vpService(this._hass, v);
+      const mileage = vpKm(this._hass.states[v.ent.mileage]);
+      return this._open({
+        title: t("log_service"),
+        text: v.name,
+        ok: "save",
+        fields: [
+          { name: "odometer", label: "f_odometer", value: mileage != null ? Math.round(mileage) : "" },
+          { name: "interval", label: "f_interval", value: service?.interval ?? "" },
+        ],
+        run: (f) => {
+          if (!card?.entry_id) throw new Error("save_failed");
+          const data = { config_entry_id: card.entry_id };
+          if (f.odometer != null) data.odometer = f.odometer;
+          if (f.interval != null) data.interval = f.interval;
+          return this._hass.callService("vehicle_consumption", "log_service", data);
+        },
+      });
+    }
+  }
+
+  _open(dialog) {
+    this._dialog = dialog;
+    this._sig = null;
+    this._render();
+  }
+
+  _close() {
+    this._dialog = null;
+    this._sig = null;
+    this._render();
+  }
+
+  /** The dialog's fields as numbers (empty ones left out), then its action; an error keeps it open. */
+  async _confirm() {
+    const d = this._dialog;
+    if (!d || d.busy) return;
+    const values = {};
+    for (const f of d.fields || []) {
+      const input = this.shadowRoot.querySelector?.(`.dialog input[name="${f.name}"]`);
+      const raw = input ? input.value : f.value;
+      f.value = raw;
+      const n = raw === "" || raw == null ? null : Number(String(raw).replace(",", "."));
+      if (n != null && Number.isFinite(n)) values[f.name] = n;
+    }
+    d.busy = true;
+    try {
+      await d.run(values);
+      this._dialog = null;
+    } catch (err) {
+      d.error = err?.message === "need_amount" ? "need_amount" : "action_failed";
+      d.busy = false;
+    }
+    this._sig = null;
+    this._render();
   }
 
   _go(tab) {
@@ -186,8 +388,6 @@ export class VehiclePanel extends HTMLElement {
   async _press(id) {
     await this._hass.callService("button", "press", { entity_id: id });
     this._pressed = id;
-    this._sig = null;
-    this._render();
     clearTimeout(this._pressTimer);
     this._pressTimer = setTimeout(() => {
       this._pressed = null;
@@ -198,7 +398,7 @@ export class VehiclePanel extends HTMLElement {
 
   _onInput(ev) {
     const el = ev.composedPath()[0];
-    if (!el?.dataset) return;
+    if (!el?.dataset || el.closest?.(".dialog")) return;
     this._draft ||= { vehicles: {} };
     if (el.dataset.g === "low_range") this._draft.low_range = el.value === "" ? null : Number(el.value);
     else if (el.dataset.v && el.dataset.k) {

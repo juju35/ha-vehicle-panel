@@ -53,13 +53,13 @@ def clean_vehicle(raw: Any) -> dict[str, Any] | None:
         value = raw.get(key)
         if value in (None, ""):
             continue
-        if kind is int:
+        if kind in (int, float):
             try:
-                number = int(value)
+                number = kind(value)
             except (TypeError, ValueError):
                 continue
             if number >= 0:
-                out[key] = number
+                out[key] = round(number, 3) if kind is float else number
         elif isinstance(value, str):
             if key == "lease_start" and not DATE.match(value):
                 continue

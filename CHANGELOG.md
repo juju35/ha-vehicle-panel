@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0 - 2026-11-28
+
+### Features
+- Overview: each car's plate, chips (lock, place and last update, driving with a pulsing dot, outside temperature, doors, charging), the cost of a full tank and the data plan's renewal, and every button of the car; where the cars are, on Home Assistant's map, with directions; one list of what to check with its action (Done, Directions, Lock, Log); the last 7 days and the last trips.
+- Every action is asked first in the panel.
+- Consumption, with Vehicle Consumption: the month against the average, cost per km, CO₂, trips and next service; a 12-month chart of the consumption, distance, cost or CO₂; the recent trips; the refuels or charges, with Log a refuel.
+- Trips: each car's recent trips under its 7-day bars.
+- Fuel, with Carburants France: the stations of a fuel with their brand, opening hours, distance, 30-day price line, shortages and directions; the best price against the month; the target price; each car's fill-up and the nearest open station; charging for electric and plug-in cars and a home charger.
+- Maintenance: the vehicle tasks with Done, the next service with Log, the tyre pressures around the car seen from above (no longer on the overview's tiles).
+- Lease: only the cars with a contract, the tab hidden without one; the gap to the pace, kilometres left this month and per month to the end, the projection at the recent pace, the excess cost and the mileage against the contract.
+- Settings: the plate, the price of an extra km and the home charger of each car.
+
 ## 1.0.0 - 2026-11-27
 
 ### Features

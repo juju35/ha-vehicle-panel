@@ -4,7 +4,7 @@
 import { mkdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
-import { devices, entities, history, NOW, settings, states } from "./mock-states.mjs";
+import { devices, entities, history, NOW, settings, states, stats } from "./mock-states.mjs";
 import { writeIfChanged } from "./screenshot-write.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -76,7 +76,7 @@ for (const s of shots) {
   await page.goto(`${ORIGIN}/`);
   await page.addScriptTag({ url: "/vehicle_panel/vehicle-panel.js", type: "module" });
   await page.evaluate(
-    async ({ s, devices, entities, states, settings, history }) => {
+    async ({ s, devices, entities, states, settings, history, stats }) => {
       await customElements.whenDefined("vehicle-panel");
       const hass = {
         states,
@@ -86,7 +86,14 @@ for (const s of shots) {
         locale: { language: "en" },
         user: { is_admin: true },
         themes: { darkMode: s.theme === "dark" },
-        callWS: async (msg) => (msg.type === "vehicle_panel/settings" ? { settings } : msg.type === "history/history_during_period" ? history : { ok: true, settings }),
+        callWS: async (msg) =>
+          msg.type === "vehicle_panel/settings"
+            ? { settings }
+            : msg.type === "history/history_during_period"
+              ? history
+              : msg.type === "recorder/statistics_during_period"
+                ? stats
+                : { ok: true, settings },
         callService: async () => {},
       };
       const el = document.createElement("vehicle-panel");
@@ -95,7 +102,7 @@ for (const s of shots) {
       document.getElementById("root").appendChild(el);
       el.hass = hass;
     },
-    { s, devices, entities, states, settings, history },
+    { s, devices, entities, states, settings, history, stats },
   );
   // The pictures loaded and the history drawn
   await page.waitForTimeout(900);
