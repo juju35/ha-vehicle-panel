@@ -184,6 +184,7 @@
   "need_amount": "Angiv mængden.",
   "action_failed": "Det virkede ikke: tjek integrationen.",
   "s_plate": "Nummerplade",
+  "s_plate_department": "Departement på nummerpladen",
   "s_extra_km": "Pris pr. ekstra km",
   "s_charger": "Hjemmelader"
 }

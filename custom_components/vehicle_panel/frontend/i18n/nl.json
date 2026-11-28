@@ -184,6 +184,7 @@
   "need_amount": "Vul de hoeveelheid in.",
   "action_failed": "Dat lukte niet: controleer de integratie.",
   "s_plate": "Kenteken",
+  "s_plate_department": "Departement op het kenteken",
   "s_extra_km": "Prijs per extra km",
   "s_charger": "Thuislader"
 }

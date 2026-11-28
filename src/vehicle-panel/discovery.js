@@ -2,6 +2,7 @@
 // Found in the registries the frontend already has (hass.devices, hass.entities): by translation key first (the
 // keys of the connected-car integrations), then by the end of the entity ID (English and French slugs), then by
 // device class. Renamed entities and entity IDs in another language are found the same way.
+import { vpPlateFormat, vpPlateOption } from "./plate.js";
 
 const vpDc = (v) => (s) => s?.attributes?.device_class === v;
 
@@ -168,6 +169,8 @@ export const vpVehicle = (hass, cfg) => {
     id,
     cfg,
     name: cfg.name || device.name_by_user || device.name || id,
+    // The plate typed in the settings (a French one gets its dashes), else the device's name when it is a French plate
+    plate: cfg.plate ? vpPlateOption(cfg.plate) : vpPlateFormat(device.name) || vpPlateFormat(device.name_by_user),
     model: [device.manufacturer, device.model].filter(Boolean).join(" "),
     ent,
     tyres,

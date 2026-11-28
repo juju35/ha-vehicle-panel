@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0 - 2026-11-28
+
+### Features
+- The plate is drawn like the real one, as on the vehicle card: EU band, the department on the right band, and the traditional emblem of Brittany, Occitania, Île-de-France, Provence, Corsica and Burgundy.
+- The plate comes from the device's name when it is a French registration; a plate typed in Settings gets its dashes.
+- Settings: the department on the plate.
+
 ## 1.1.1 - 2026-11-28
 
 ### Fixes

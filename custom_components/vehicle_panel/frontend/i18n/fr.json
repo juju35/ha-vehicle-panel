@@ -184,6 +184,7 @@
   "need_amount": "Saisissez la quantité.",
   "action_failed": "Cela n’a pas fonctionné : vérifiez l’intégration.",
   "s_plate": "Plaque",
+  "s_plate_department": "Département de la plaque",
   "s_extra_km": "Prix d’un km supplémentaire",
   "s_charger": "Borne de recharge"
 }

@@ -184,6 +184,7 @@
   "need_amount": "Inserisci la quantità.",
   "action_failed": "Non ha funzionato: controlla l’integrazione.",
   "s_plate": "Targa",
+  "s_plate_department": "Dipartimento sulla targa",
   "s_extra_km": "Prezzo del km in più",
   "s_charger": "Wallbox di casa"
 }

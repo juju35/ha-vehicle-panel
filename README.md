@@ -60,14 +60,14 @@ Pick your cars once: the panel finds their entities by itself, whatever the inte
 
 - A **Vehicles** entry in the sidebar, for every user, with one tab each: Overview, Trips, Consumption, Fuel, Maintenance, Lease and Settings
 - An illustrated header with your cars parked by the road (their own photo when the integration gives one), and a status pill: all locked, unlocked, low range, driving
-- **Overview**: a tile per car with its picture and plate, chips (lock, place and last update, driving, outside temperature, doors, charging), range and gauge with the cost of a full tank, mileage, data plan and its renewal, and every button of the car; where the cars are, on Home Assistant's own map, with directions; one list of what to check, each with its action (Done, Directions, Lock, Log); the last 7 days and the last trips
+- **Overview**: a tile per car with its picture and its plate drawn like the real one (EU band, department and regional emblem), chips (lock, place and last update, driving, outside temperature, doors, charging), range and gauge with the cost of a full tank, mileage, data plan and its renewal, and every button of the car; where the cars are, on Home Assistant's own map, with directions; one list of what to check, each with its action (Done, Directions, Lock, Log); the last 7 days and the last trips
 - **Every action is asked first** in the panel (a button of the car, lock, unlock, Done, a refuel, a service)
 - **Trips**: kilometres driven today, this week and day by day over the last 7 days, and each car's recent trips
 - **Consumption** (with Vehicle Consumption): the month's consumption against the average, distance, cost and cost per km, CO₂, trips and next service; a 12-month chart of the consumption, distance, cost or CO₂; the recent trips; the refuels (or charges), with **Log a refuel**
 - **Fuel** (with Carburants France): the stations of a fuel with their brand, opening hours, distance, 30-day price line, shortages and directions; the best price against the month; the target price; what each car's fill-up costs and the nearest open station; **charging** for an electric or plug-in car and a home charger (battery, end of charge, power, the charger's switches, modes and current)
 - **Maintenance**: the vehicle tasks of the Maintenance integration with **Done**, the next service of Vehicle Consumption with **Log**, and each car's tyre pressures around the car seen from above, a low one flagged
 - **Lease** (LOA), only the cars with a contract (the tab is hidden without one): the gap to the pace, kilometres left this month and per month to the end, the projection at the recent pace, the excess cost, and the mileage drawn against the contract
-- **Settings**: a name, plate, lease contract and price of an extra km, tank, picture and optional devices (consumption, data plan, home charger) per car, and the low range alert, saved for every user (administrators only)
+- **Settings**: a name, plate and its department, lease contract and price of an extra km, tank, picture and optional devices (consumption, data plan, home charger) per car, and the low range alert, saved for every user (administrators only)
 - Several vehicles, of different brands, side by side
 - Automatic entity discovery from the device, for [18 car integrations](#supported-integrations) (whatever the entity IDs or the Home Assistant language)
 - English, French, German, Spanish, Serbian (Cyrillic and Latin), Italian, Dutch, European Portuguese, Polish, Romanian, Danish, Swedish, Bulgarian, Russian, Ukrainian, Hungarian, Slovak, Czech, Slovenian, Latvian and Greek, follows the Home Assistant language
@@ -154,7 +154,8 @@ The vehicles, the fuel stations, the maintenance entities and the low range aler
 | Setting | What it does |
 |---|---|
 | Name | The name shown in the panel (default: the device's name) |
-| Plate | The plate shown on the car's tile |
+| Plate | The plate drawn on the car's tile like the real one (EU band, department); default: the device's name when it is a French registration (`GW782EN` → `GW-782-EN`). Any other registration is shown as typed |
+| Department on the plate | The department on the right band, e.g. `35`; those of Brittany, Occitania, Île-de-France, Provence, Corsica and Burgundy get their traditional regional emblem |
 | Contract mileage, duration, start and mileage at the start | The lease contract the Lease tab follows (Vehicle Consumption's lease, when it has one, comes first) |
 | Price of an extra km | The excess cost of the projected kilometres over the contract |
 | Tank | The tank capacity in litres: the fuel level from the fuel quantity, and the cost of a full tank |

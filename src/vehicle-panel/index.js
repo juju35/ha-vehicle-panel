@@ -4,6 +4,7 @@ import "./core.js";
 import "./discovery.js";
 import "./model.js";
 import "./rich.js";
+import "./plate.js";
 import "./scene.js";
 import "./styles.js";
 import "./views.js";
@@ -14,4 +15,5 @@ export { VEHICLE_PANEL_VERSION, VP_EN, VP_LANGS, vpFmt, vpLang, vpT } from "./co
 export { vpTyrePos, vpVehicle } from "./discovery.js";
 export { vpDaily, vpLease, vpLevel, vpLocked, vpRange, vpStations, vpStatus, vpUrgency, vpWeekly } from "./model.js";
 export { vpBest, vpCard, vpCarFuel, vpChecks, vpDirections, vpFuelData, vpLeaseCurve, vpLeaseInfo, vpMaintenanceItems, vpMonthDriven, vpOpen, vpStationsFor, vpWeek } from "./rich.js";
+export { vpPlateFormat, vpPlateOption, vpPlateSvg } from "./plate.js";
 export { VehiclePanel } from "./panel.js";

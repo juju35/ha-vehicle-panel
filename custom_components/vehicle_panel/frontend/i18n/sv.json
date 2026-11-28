@@ -184,6 +184,7 @@
   "need_amount": "Ange mängden.",
   "action_failed": "Det fungerade inte: kontrollera integrationen.",
   "s_plate": "Registreringsnummer",
+  "s_plate_department": "Departement på registreringsskylten",
   "s_extra_km": "Pris per extra km",
   "s_charger": "Hemmaladdare"
 }

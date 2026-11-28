@@ -184,6 +184,7 @@
   "need_amount": "Ievadiet daudzumu.",
   "action_failed": "Neizdevās: pārbaudiet integrāciju.",
   "s_plate": "Numura zīme",
+  "s_plate_department": "Departaments uz numura zīmes",
   "s_extra_km": "Papildu km cena",
   "s_charger": "Mājas uzlādes stacija"
 }

@@ -184,6 +184,7 @@
   "need_amount": "Introduceți cantitatea.",
   "action_failed": "Nu a funcționat: verificați integrarea.",
   "s_plate": "Număr de înmatriculare",
+  "s_plate_department": "Departamentul de pe număr",
   "s_extra_km": "Prețul unui km în plus",
   "s_charger": "Stație de încărcare acasă"
 }

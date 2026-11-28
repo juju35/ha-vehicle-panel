@@ -126,6 +126,17 @@ test("Carburants France: stations by price, open now from the hours, shortages l
   assert.equal(lib.vpDirections(Number.NaN, 1), null);
 });
 
+test("the plate: the device's name when it is a French plate, else the one typed; its department and emblem", () => {
+  assert.equal(vehicle("espace").plate, "AB-123-CD");
+  assert.equal(vehicle("captur").plate, "FT-208-QM");
+  assert.equal(lib.vpVehicle(hass(), { device_id: "captur", plate: " ab 12 cd " }).plate, "AB 12 CD");
+  assert.equal(lib.vpPlateFormat("Espace"), null);
+  const svg = lib.vpPlateSvg("AB-123-CD", "35");
+  assert.ok(svg.includes(">35<") && svg.includes('fill="#000"'), "Brittany's flag");
+  assert.ok(!lib.vpPlateSvg('<b>"x', "<i>").includes("<b>"));
+  assert.ok(!lib.vpPlateSvg("AB-123-CD").includes("textLength=\"32\""));
+});
+
 test("each car's fuel and the entities of a fuel (SP95 is not SP95-E10)", () => {
   const data = lib.vpFuelData(hass());
   assert.equal(lib.vpCarFuel(hass(), vehicle("captur"), data).key, "e10");
