@@ -27,6 +27,7 @@ export class VehiclePanel extends HTMLElement {
     this._hass = hass;
     if (first) this._init();
     this._render();
+    this._menu();
   }
 
   get hass() {
@@ -35,7 +36,15 @@ export class VehiclePanel extends HTMLElement {
 
   set narrow(v) {
     this._narrow = v;
-    this._render();
+    this._menu();
+  }
+
+  /** Home Assistant's menu button (shown on a narrow screen or with the sidebar hidden) needs hass and narrow. */
+  _menu() {
+    const menu = this.shadowRoot?.querySelector?.("ha-menu-button");
+    if (!menu) return;
+    menu.hass = this._hass;
+    menu.narrow = this._narrow;
   }
 
   set route(route) {
@@ -194,6 +203,7 @@ export class VehiclePanel extends HTMLElement {
       this._sig = html;
       this._lastTab = tab;
       this.shadowRoot.innerHTML = html;
+      this._menu();
       this.shadowRoot.querySelector?.(".dialog [data-autofocus]")?.focus?.();
     }
     this._mountMap(ctx);
@@ -236,7 +246,7 @@ export class VehiclePanel extends HTMLElement {
     const nav = tabs.map((k) => `<button class="tab ${k === tab ? "active" : ""}" data-tab="${k}" role="tab" aria-selected="${k === tab}">${vpEsc(this._t(`tab_${k}`))}</button>`).join("");
     return `<style>${VP_STYLE}</style>
       <div class="banner ${ctx.night ? "night" : ""}">${vpBarScene(pics)}<div class="road"></div>
-        <div class="htext">${this._narrow ? "<ha-menu-button></ha-menu-button>" : ""}
+        <div class="htext"><ha-menu-button></ha-menu-button>
           <div class="hicon" style="${status?.tone === "warn" ? "--vp-st:var(--vp-warn)" : status ? "--vp-st:var(--vp-ok)" : ""}">${VP_ICON_CAR}</div>
           <div class="tt"><div class="trow"><span class="htitle">${vpEsc(this._t("title"))}</span>${status ? `<span class="pill ${status.tone}"><span class="dot"></span>${vpEsc(status.text)}</span>` : ""}</div>
           <div class="hsub">${vpEsc(sub)}</div></div></div></div>
