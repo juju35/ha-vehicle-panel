@@ -125,6 +125,15 @@ def test_helpers():
         "name": "Car",
         "lease_start": "2025-02-01",
     }
+    assert clean_vehicle(
+        {"device_id": "a", "plate": " AB-123-CD ", "extra_km_price": "0.0812", "charger_device": "w"}
+    ) == {
+        "device_id": "a",
+        "plate": "AB-123-CD",
+        "extra_km_price": 0.081,
+        "charger_device": "w",
+    }
+    assert clean_vehicle({"device_id": "a", "extra_km_price": "x"}) == {"device_id": "a"}
     assert merge_vehicles(["b", "a"], [{"device_id": "a", "tank_l": 50}]) == [
         {"device_id": "b"},
         {"device_id": "a", "tank_l": 50},
