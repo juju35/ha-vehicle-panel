@@ -143,6 +143,7 @@
   "avg_30": "media pe 30 de zile {v}",
   "lowest_30": "minim {v}",
   "target_price": "Preț țintă",
+  "cheapest_now": "Cele mai ieftine acum",
   "below": "Sub {v}",
   "above": "Peste {v}",
   "under_target": "sub ținta dvs. din {t}",

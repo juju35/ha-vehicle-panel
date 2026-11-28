@@ -143,6 +143,7 @@
   "avg_30": "30 dienu vidējā {v}",
   "lowest_30": "zemākā {v}",
   "target_price": "Mērķa cena",
+  "cheapest_now": "Lētākais tagad",
   "below": "Zem {v}",
   "above": "Virs {v}",
   "under_target": "zem jūsu mērķa kopš {t}",

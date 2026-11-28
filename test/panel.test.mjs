@@ -295,6 +295,15 @@ test("a language file is fetched with the version, so an update never shows a ca
   assert.deepEqual(urls, [`/vehicle_panel/i18n/fr.json?v=${lib.VEHICLE_PANEL_VERSION}`]);
 });
 
+test("the price totem: the cheapest price of every fuel followed, dashes when out of stock everywhere", () => {
+  const svg = lib.vpTotemSvg([{ key: "e10", name: "E10", price: 1.739 }, { key: "gplc", name: "GPLc", price: null }, { key: "x", name: "<b>Bio", price: 2 }], "fr");
+  assert.ok(svg.includes(">SP95-E10<") && svg.includes(">1,739<") && svg.includes(">----<"));
+  assert.ok(!svg.includes("<b>") && svg.includes("#C62828"));
+  const p = panelFor(hass());
+  const html = p._body(p._ctx(), "fuel");
+  assert.ok(html.includes(lib.VP_EN.cheapest_now) && html.includes('class="totem"'));
+});
+
 test("the version is the same in the bundle and in package.json", () => {
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(lib.VEHICLE_PANEL_VERSION, pkg.version);

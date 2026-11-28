@@ -143,6 +143,7 @@
   "avg_30": "moyenne sur 30 jours {v}",
   "lowest_30": "plus bas {v}",
   "target_price": "Prix cible",
+  "cheapest_now": "Les moins chers",
   "below": "Sous {v}",
   "above": "Au-dessus de {v}",
   "under_target": "sous votre cible depuis {t}",

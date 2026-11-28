@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0 - 2026-11-28
+
+### Features
+- Fuel: the price totem of the Carburants France card shows the cheapest price of every fuel followed, with the station, whether it is open, its distance and the directions.
+
 ## 1.3.2 - 2026-11-28
 
 ### Fixes

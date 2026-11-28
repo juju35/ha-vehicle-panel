@@ -1,6 +1,6 @@
 {
   "name": "ha-vehicle-panel",
-  "version": "1.3.2",
+  "version": "1.4.0",
   "description": "Home Assistant sidebar panel for your cars: range, trips, consumption, fuel prices, maintenance and lease.",
   "private": true,
   "type": "module",
