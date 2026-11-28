@@ -64,6 +64,8 @@
   "s_consumption": "Apparaat Vehicle Consumption",
   "s_data": "Apparaat Orange Internet On the move",
   "s_low_range": "Waarschuwing lage actieradius (km)",
+  "s_location_admins": "Locatie van de voertuigen alleen voor beheerders",
+  "s_location_admins_hint": "Andere gebruikers zien in dit paneel de plaats, de kaart en de route naar de auto’s niet. Hun trackers blijven elders in Home Assistant zichtbaar.",
   "s_auto": "Automatisch",
   "save": "Opslaan",
   "saved": "Opgeslagen",

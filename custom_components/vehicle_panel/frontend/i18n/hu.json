@@ -64,6 +64,8 @@
   "s_consumption": "Vehicle Consumption eszköz",
   "s_data": "Orange Internet On the move eszköz",
   "s_low_range": "Figyelmeztetés alacsony hatótávnál (km)",
+  "s_location_admins": "A járművek helye csak rendszergazdáknak",
+  "s_location_admins_hint": "A többi felhasználó ebben a panelen nem látja a helyet, a térképet és az útvonalat az autókhoz. A nyomkövetőik a Home Assistant más részein továbbra is láthatók.",
   "s_auto": "Automatikus",
   "save": "Mentés",
   "saved": "Mentve",

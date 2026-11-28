@@ -64,6 +64,8 @@
   "s_consumption": "Enhet Vehicle Consumption",
   "s_data": "Enhet Orange Internet On the move",
   "s_low_range": "Varning för låg räckvidd (km)",
+  "s_location_admins": "Fordonens plats endast för administratörer",
+  "s_location_admins_hint": "Andra användare ser varken platsen, kartan eller vägen till bilarna i den här panelen. Deras spårare syns fortfarande på andra ställen i Home Assistant.",
   "s_auto": "Automatiskt",
   "save": "Spara",
   "saved": "Sparat",

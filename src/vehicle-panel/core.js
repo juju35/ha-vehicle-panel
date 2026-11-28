@@ -2,7 +2,7 @@
 // The panel's English strings (the other languages are frontend/i18n/<lang>.json, loaded on demand), its
 // colours, and the helpers every tab uses: escaping, numbers, dates, the language.
 
-export const VEHICLE_PANEL_VERSION = "1.2.0";
+export const VEHICLE_PANEL_VERSION = "1.3.0";
 
 // Languages with a file in frontend/i18n/ (English is built in)
 export const VP_LANGS = ["en", "fr", "de", "es", "it", "nl", "pt", "pl", "sr", "sr-Latn", "ro", "da", "sv", "bg", "ru", "uk", "hu", "sk", "cs", "sl", "lv", "el"];
@@ -75,6 +75,8 @@ export const VP_EN = {
   s_consumption: "Vehicle Consumption device",
   s_data: "Orange Internet On the move device",
   s_low_range: "Low range alert (km)",
+  s_location_admins: "Vehicles' location for administrators only",
+  s_location_admins_hint: "The other users don't see the place, the map or the directions to the cars in this panel. Their trackers stay visible elsewhere in Home Assistant.",
   s_auto: "Automatic",
   save: "Save",
   saved: "Saved",

@@ -5,7 +5,8 @@ registries the frontend already has (``hass.devices``, ``hass.entities``), and r
 the settings kept in the config entry's options:
 
 - ``vehicle_panel/settings``: the vehicles picked in the setup, their lease contract, tank and optional devices,
-  the fuel prices and maintenance entities, and the low range threshold (every user: the panel is for everyone);
+  the fuel prices and maintenance entities, the low range threshold and whether the vehicles' location is for
+  administrators only (every user: the panel is for everyone);
 - ``vehicle_panel/update_settings``: the same, edited in the panel's Settings tab (administrators only).
 """
 
@@ -22,6 +23,7 @@ from homeassistant.core import HomeAssistant, callback
 from .const import (
     CONF_DEVICE_ID,
     CONF_FUEL_ENTITIES,
+    CONF_LOCATION_ADMINS_ONLY,
     CONF_LOW_RANGE,
     CONF_MAINTENANCE_ENTITIES,
     CONF_VEHICLES,
@@ -77,6 +79,7 @@ def settings(entry: ConfigEntry | None) -> dict[str, Any]:
         CONF_FUEL_ENTITIES: [e for e in options.get(CONF_FUEL_ENTITIES, []) if isinstance(e, str)],
         CONF_MAINTENANCE_ENTITIES: [e for e in options.get(CONF_MAINTENANCE_ENTITIES, []) if isinstance(e, str)],
         CONF_LOW_RANGE: low if isinstance(low, int) and low >= 0 else DEFAULT_LOW_RANGE,
+        CONF_LOCATION_ADMINS_ONLY: options.get(CONF_LOCATION_ADMINS_ONLY) is True,
     }
 
 
@@ -125,6 +128,7 @@ def _ws_settings(hass: HomeAssistant, connection: websocket_api.ActiveConnection
         vol.Optional(CONF_FUEL_ENTITIES): [str],
         vol.Optional(CONF_MAINTENANCE_ENTITIES): [str],
         vol.Optional(CONF_LOW_RANGE): vol.All(int, vol.Range(min=0, max=2000)),
+        vol.Optional(CONF_LOCATION_ADMINS_ONLY): bool,
     }
 )
 @websocket_api.require_admin
@@ -137,7 +141,7 @@ def _ws_update_settings(hass: HomeAssistant, connection: websocket_api.ActiveCon
     updated = {**current}
     if CONF_VEHICLES in msg:
         updated[CONF_VEHICLES] = [v for v in (clean_vehicle(x) for x in msg[CONF_VEHICLES]) if v]
-    for key in (CONF_FUEL_ENTITIES, CONF_MAINTENANCE_ENTITIES, CONF_LOW_RANGE):
+    for key in (CONF_FUEL_ENTITIES, CONF_MAINTENANCE_ENTITIES, CONF_LOW_RANGE, CONF_LOCATION_ADMINS_ONLY):
         if key in msg:
             updated[key] = msg[key]
     if updated != current:

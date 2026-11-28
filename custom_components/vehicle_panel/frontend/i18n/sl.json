@@ -64,6 +64,8 @@
   "s_consumption": "Naprava Vehicle Consumption",
   "s_data": "Naprava Orange Internet On the move",
   "s_low_range": "Opozorilo za nizek doseg (km)",
+  "s_location_admins": "Lokacija vozil samo za skrbnike",
+  "s_location_admins_hint": "Drugi uporabniki v tej plošči ne vidijo kraja, zemljevida ali poti do avtomobilov. Njihovi sledilniki ostanejo vidni drugje v Home Assistantu.",
   "s_auto": "Samodejno",
   "save": "Shrani",
   "saved": "Shranjeno",

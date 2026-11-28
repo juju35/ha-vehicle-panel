@@ -81,8 +81,16 @@ export class VehiclePanel extends HTMLElement {
     this._fetchHistory();
   }
 
+  /**
+   * The vehicles of the settings. When their location is for administrators only, another user's panel drops the
+   * trackers (no place, map or directions to the cars): the panel only, the trackers stay readable elsewhere.
+   */
   _vehicles() {
-    return (this._settings?.vehicles || []).map((cfg) => vpVehicle(this._hass, this._draftOf(cfg)));
+    const hide = this._settings?.location_admins_only === true && !this._hass?.user?.is_admin;
+    return (this._settings?.vehicles || []).map((cfg) => {
+      const v = vpVehicle(this._hass, this._draftOf(cfg));
+      return hide && !v.missing ? { ...v, ent: { ...v.ent, location: undefined, location_last_activity: undefined } } : v;
+    });
   }
 
   _draftOf(cfg) {
@@ -139,7 +147,11 @@ export class VehiclePanel extends HTMLElement {
       hass: this._hass,
       lang: this._lang(),
       t: (k, vars) => this._t(k, vars),
-      settings: { ...this._settings, ...(this._draft?.low_range != null ? { low_range: this._draft.low_range } : {}) },
+      settings: {
+        ...this._settings,
+        ...(this._draft?.low_range != null ? { low_range: this._draft.low_range } : {}),
+        ...(this._draft?.location_admins_only != null ? { location_admins_only: this._draft.location_admins_only } : {}),
+      },
       vehicles: this._vehicles(),
       history: this._history,
       night: !!this._hass?.themes?.darkMode,
@@ -402,6 +414,7 @@ export class VehiclePanel extends HTMLElement {
     if (!el?.dataset || el.closest?.(".dialog")) return;
     this._draft ||= { vehicles: {} };
     if (el.dataset.g === "low_range") this._draft.low_range = el.value === "" ? null : Number(el.value);
+    else if (el.dataset.g === "location_admins_only") this._draft.location_admins_only = el.checked === true;
     else if (el.dataset.v && el.dataset.k) {
       const v = (this._draft.vehicles[el.dataset.v] ||= {});
       v[el.dataset.k] = el.value;
@@ -418,6 +431,7 @@ export class VehiclePanel extends HTMLElement {
     });
     const msg = { type: "vehicle_panel/update_settings", vehicles };
     if (this._draft?.low_range != null && Number.isFinite(this._draft.low_range)) msg.low_range = Math.round(this._draft.low_range);
+    if (typeof this._draft?.location_admins_only === "boolean") msg.location_admins_only = this._draft.location_admins_only;
     try {
       const res = await this._hass.callWS(msg);
       if (!res?.ok) throw new Error(res?.error || "failed");

@@ -64,6 +64,8 @@
   "s_consumption": "Zariadenie Vehicle Consumption",
   "s_data": "Zariadenie Orange Internet On the move",
   "s_low_range": "Upozornenie na nízky dojazd (km)",
+  "s_location_admins": "Poloha vozidiel len pre správcov",
+  "s_location_admins_hint": "Ostatní používatelia v tomto paneli nevidia miesto, mapu ani trasu k autám. Ich sledovače zostávajú viditeľné inde v Home Assistant.",
   "s_auto": "Automaticky",
   "save": "Uložiť",
   "saved": "Uložené",

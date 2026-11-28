@@ -64,6 +64,8 @@
   "s_consumption": "Dispositivo Vehicle Consumption",
   "s_data": "Dispositivo Orange Internet On the move",
   "s_low_range": "Aviso de autonomía baja (km)",
+  "s_location_admins": "Ubicación de los vehículos solo para administradores",
+  "s_location_admins_hint": "Los demás usuarios no ven el lugar, el mapa ni la ruta hasta los coches en este panel. Sus rastreadores siguen visibles en otras partes de Home Assistant.",
   "s_auto": "Automático",
   "save": "Guardar",
   "saved": "Guardado",

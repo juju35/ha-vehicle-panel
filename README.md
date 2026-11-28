@@ -67,7 +67,7 @@ Pick your cars once: the panel finds their entities by itself, whatever the inte
 - **Fuel** (with Carburants France): the stations of a fuel with their brand, opening hours, distance, 30-day price line, shortages and directions; the best price against the month; the target price; what each car's fill-up costs and the nearest open station; **charging** for an electric or plug-in car and a home charger (battery, end of charge, power, the charger's switches, modes and current)
 - **Maintenance**: the vehicle tasks of the Maintenance integration with **Done**, the next service of Vehicle Consumption with **Log**, and each car's tyre pressures around the car seen from above, a low one flagged
 - **Lease** (LOA), only the cars with a contract (the tab is hidden without one): the gap to the pace, kilometres left this month and per month to the end, the projection at the recent pace, the excess cost, and the mileage drawn against the contract
-- **Settings**: a name, plate and its department, lease contract and price of an extra km, tank, picture and optional devices (consumption, data plan, home charger) per car, and the low range alert, saved for every user (administrators only)
+- **Settings**: a name, plate and its department, lease contract and price of an extra km, tank, picture and optional devices (consumption, data plan, home charger) per car, the low range alert and whether the location is for administrators only, saved for every user (administrators only)
 - Several vehicles, of different brands, side by side
 - Automatic entity discovery from the device, for [18 car integrations](#supported-integrations) (whatever the entity IDs or the Home Assistant language)
 - English, French, German, Spanish, Serbian (Cyrillic and Latin), Italian, Dutch, European Portuguese, Polish, Romanian, Danish, Swedish, Bulgarian, Russian, Ukrainian, Hungarian, Slovak, Czech, Slovenian, Latvian and Greek, follows the Home Assistant language
@@ -163,6 +163,7 @@ The vehicles, the fuel stations, the maintenance entities and the low range aler
 | Vehicle Consumption device, Orange Internet On the move device | The devices of the optional integrations (default: the one whose name matches the car) |
 | Home charger device | The charger whose controls the Fuel tab shows with the car |
 | Low range alert | Below this range (km), the status turns amber (default 100 km) |
+| Vehicles' location for administrators only | The other users don't see the place, the map or the directions to the cars in the panel (off by default). Their `device_tracker` entities stay readable elsewhere in Home Assistant: this is not a permission |
 
 ## How it works
 

@@ -211,6 +211,21 @@ test("every tab draws, and names from Home Assistant are escaped", () => {
   }
 });
 
+test("the location can be for administrators only: another user's panel has no place, map or directions to the cars", () => {
+  const admin = panelFor(hass({ user: { is_admin: true } }), { ...settings, location_admins_only: true });
+  assert.ok(admin._vehicles()[0].ent.location);
+  const user = panelFor(hass({ user: { is_admin: false } }), { ...settings, location_admins_only: true });
+  const ctx = user._ctx();
+  assert.ok(ctx.vehicles.every((v) => !v.ent.location && !v.ent.location_last_activity));
+  const overview = user._body(ctx, "overview");
+  assert.ok(!overview.includes(lib.VP_EN.where_cars) && !overview.includes(lib.VP_EN.at_home), "no place nor map");
+  assert.ok(!user._body(ctx, "trips").includes(lib.VP_EN.location));
+  const open = panelFor(hass({ user: { is_admin: false } }));
+  assert.ok(open._vehicles()[0].ent.location, "shown to everyone by default");
+  open._onInput({ composedPath: () => [{ dataset: { g: "location_admins_only" }, checked: true }] });
+  assert.equal(open._ctx().settings.location_admins_only, true);
+});
+
 test("without a vehicle the panel says where to pick them", () => {
   const p = panelFor(hass(), { vehicles: [], fuel_entities: [], maintenance_entities: [], low_range: 100 });
   assert.ok(p._body(p._ctx(), "overview").includes(lib.VP_EN.no_vehicle.slice(0, 20)));

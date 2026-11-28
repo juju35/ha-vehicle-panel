@@ -64,6 +64,8 @@
   "s_consumption": "Vehicle Consumption ierīce",
   "s_data": "Orange Internet On the move ierīce",
   "s_low_range": "Brīdinājums par zemu nobraukumu (km)",
+  "s_location_admins": "Transportlīdzekļu atrašanās vieta tikai administratoriem",
+  "s_location_admins_hint": "Citi lietotāji šajā panelī neredz vietu, karti un maršrutu līdz automašīnām. To izsekotāji joprojām ir redzami citur Home Assistant.",
   "s_auto": "Automātiski",
   "save": "Saglabāt",
   "saved": "Saglabāts",

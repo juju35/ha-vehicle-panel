@@ -250,7 +250,8 @@ export const vpSettingsTab = (ctx) => {
     .join("");
   return `<div class="h"><b>${vpEsc(t("settings_vehicles"))}</b></div>${forms}
     <div class="c"><div class="h"><b>${vpEsc(t("settings_general"))}</b></div><div class="form">
-      <label class="f">${vpEsc(t("s_low_range"))}<input type="number" min="0" max="2000" data-g="low_range" value="${vpEsc(ctx.settings.low_range)}"></label></div>
+      <label class="f">${vpEsc(t("s_low_range"))}<input type="number" min="0" max="2000" data-g="low_range" value="${vpEsc(ctx.settings.low_range)}"></label>
+      <label class="check"><input type="checkbox" data-g="location_admins_only" ${ctx.settings.location_admins_only ? "checked" : ""}><span>${vpEsc(t("s_location_admins"))}<small>${vpEsc(t("s_location_admins_hint"))}</small></span></label></div>
       <div class="note">${vpEsc(t("pick_vehicles"))}</div>
       <div class="acts"><button class="btn accent" data-save>${vpEsc(ctx.saveState ? t(ctx.saveState) : t("save"))}</button></div></div>`;
 };
