@@ -279,6 +279,22 @@ test("actions are asked first in the panel: a button, Done, a refuel; saving sen
   assert.equal(p._saveState, "saved");
 });
 
+test("a language file is fetched with the version, so an update never shows a cached older one", async () => {
+  const urls = [];
+  const saved = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    urls.push(url);
+    return { ok: true, json: async () => ({ title: "Voitures" }) };
+  };
+  try {
+    lib.vpStringCache.delete("fr");
+    assert.equal((await lib.vpLoadStrings("fr")).title, "Voitures");
+  } finally {
+    globalThis.fetch = saved;
+  }
+  assert.deepEqual(urls, [`/vehicle_panel/i18n/fr.json?v=${lib.VEHICLE_PANEL_VERSION}`]);
+});
+
 test("the price totem: the cheapest price of every fuel followed, dashes when out of stock everywhere", () => {
   const svg = lib.vpTotemSvg([{ key: "e10", name: "E10", price: 1.739 }, { key: "gplc", name: "GPLc", price: null }, { key: "x", name: "<b>Bio", price: 2 }], "fr");
   assert.ok(svg.includes(">SP95-E10<") && svg.includes(">1,739<") && svg.includes(">----<"));

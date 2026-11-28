@@ -283,7 +283,7 @@ export const vpLoadStrings = (lang) => {
   if (!vpStringCache.has(lang))
     vpStringCache.set(
       lang,
-      fetch(`/vehicle_panel/i18n/${lang}.json`)
+      fetch(`/vehicle_panel/i18n/${lang}.json?v=${VEHICLE_PANEL_VERSION}`)
         .then((r) => (r.ok ? r.json() : VP_EN))
         .catch(() => VP_EN),
     );
