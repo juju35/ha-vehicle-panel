@@ -184,6 +184,7 @@
   "need_amount": "Menge eingeben.",
   "action_failed": "Das hat nicht geklappt: Integration prüfen.",
   "s_plate": "Kennzeichen",
+  "s_plate_department": "Département auf dem Kennzeichen",
   "s_extra_km": "Preis pro Mehrkilometer",
   "s_charger": "Wallbox"
 }

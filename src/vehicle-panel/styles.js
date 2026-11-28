@@ -104,9 +104,7 @@ export const VP_STYLE = `
   @keyframes vp-pulse { 70% { box-shadow:0 0 0 7px transparent; } 100% { box-shadow:0 0 0 0 transparent; } }
   @media (prefers-reduced-motion: reduce) { .pulse { animation:none; } }
   .vrow .n { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-  .plate { display:inline-flex; align-items:center; gap:6px; height:22px; flex:none; border:1.5px solid #1d3f9a; border-radius:5px; overflow:hidden;
-           background:#fff; color:#111; font:700 12.5px/1 ui-monospace, "SFMono-Regular", Menlo, monospace; letter-spacing:.06em; }
-  .plate i { width:8px; align-self:stretch; background:#1d3f9a; }
+  .plate { height:26px; width:auto; max-width:48%; flex:none; display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
   .minis.two { grid-template-columns:repeat(2, minmax(0,1fr)); }
   .minis.six { grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); }
   .mini > span.m { display:block; } .mini b + span.m { font-size:11.5px; margin-top:2px; }

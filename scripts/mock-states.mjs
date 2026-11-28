@@ -228,8 +228,8 @@ export const states = Object.fromEntries(
 
 export const settings = {
   vehicles: [
-    { device_id: "espace", plate: "GH-512-KL", lease_km: 60000, lease_months: 48, lease_start: "2025-01-20", tank_l: 55, extra_km_price: 0.08 },
-    { device_id: "captur", plate: "FT-208-QM", tank_l: 48 },
+    { device_id: "espace", plate_department: "35", lease_km: 60000, lease_months: 48, lease_start: "2025-01-20", tank_l: 55, extra_km_price: 0.08 },
+    { device_id: "captur", plate: "ft208qm", plate_department: "13", tank_l: 48 },
   ],
   fuel_entities: [],
   maintenance_entities: [],

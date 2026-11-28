@@ -5,6 +5,7 @@ import { vpEsc, vpFmt, vpKm, vpName, vpNum, vpRelative, vpState } from "./core.j
 import { vpPictureUrl } from "./discovery.js";
 import { vpLevel, vpLocked, vpRange, vpStatus, vpWhere } from "./model.js";
 import { vpAllTrips, vpBest, vpCanDone, vpCard, vpCarFuel, vpCheapestFor, vpChecks, vpDirections, vpDriving, vpFuelData, vpWeek } from "./rich.js";
+import { vpPlateSvg } from "./plate.js";
 import { vpTileScene } from "./scene.js";
 
 export const VP_ICON_CAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M3 16v-4l2-5h14l2 5v4Z"/><circle cx="7" cy="16" r="2"/><circle cx="17" cy="16" r="2"/></svg>';
@@ -48,9 +49,6 @@ const vpButtonLabel = (ctx, v, id) => {
   const d = ctx.hass.devices?.[v.id];
   return vpName(ctx.hass, id, d?.name_by_user || d?.name).replace(/^./, (c) => c.toUpperCase());
 };
-
-/** A French-style plate badge (blue bands), only when the plate is set in the settings. */
-const vpPlate = (plate) => (plate ? `<span class="plate"><i></i>${vpEsc(plate)}<i></i></span>` : "");
 
 /** A tile's status chips: lock, place and last update, driving, outside temperature, doors, charging. */
 const vpChips = (ctx, v) => {
@@ -112,7 +110,7 @@ export const vpVehicleTile = (ctx, v) => {
   const levelColor = level && level.pct < 20 ? "var(--vp-warn)" : "var(--vp-accent)";
   return `<div class="c veh" data-vehicle="${vpEsc(v.id)}">
     <div class="scene ${ctx.night ? "night" : ""}">${vpTileScene(vpPictureUrl(hass, v.picture), `${ctx.uid}-${vpEsc(v.id)}`)}</div>
-    <div class="vrow"><div class="n">${vpEsc(v.name)}</div>${vpPlate(v.cfg.plate)}</div>
+    <div class="vrow"><div class="n">${vpEsc(v.name)}</div>${v.plate ? vpPlateSvg(v.plate, v.cfg.plate_department) : ""}</div>
     <div class="vbody">
       ${vpChips(ctx, v)}
       ${range != null ? `<div class="r" style="justify-content:flex-start;align-items:baseline;gap:6px"><span class="big">${vpFmt(range, lang)}</span><span class="m">${vpEsc(t("range"))}</span></div>` : ""}
@@ -239,7 +237,7 @@ export const vpSettingsTab = (ctx) => {
   const forms = ctx.vehicles
     .map(
       (v) => `<div class="c"><div class="h"><b>${vpEsc(v.missing ? v.id : v.name)}</b><span>${vpEsc(v.model || "")}</span></div><div class="form">
-      ${field(v, "name", "s_name", "text")}${field(v, "plate", "s_plate", "text", 'maxlength="12" autocapitalize="characters"')}
+      ${field(v, "name", "s_name", "text")}${field(v, "plate", "s_plate", "text", 'maxlength="12" autocapitalize="characters"')}${field(v, "plate_department", "s_plate_department", "text", 'maxlength="3" autocapitalize="characters"')}
       ${field(v, "lease_km", "s_lease_km")}${field(v, "lease_months", "s_lease_months")}
       ${field(v, "lease_start", "s_lease_start", "date")}
       ${field(v, "lease_start_km", "s_lease_start_km")}${field(v, "extra_km_price", "s_extra_km", "number", 'step="0.01"')}${field(v, "tank_l", "s_tank")}

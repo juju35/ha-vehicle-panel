@@ -184,6 +184,7 @@
   "need_amount": "Podaj ilość.",
   "action_failed": "Nie udało się: sprawdź integrację.",
   "s_plate": "Tablica rejestracyjna",
+  "s_plate_department": "Departament na tablicy",
   "s_extra_km": "Cena za dodatkowy km",
   "s_charger": "Ładowarka domowa"
 }

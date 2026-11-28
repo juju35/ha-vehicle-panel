@@ -184,6 +184,7 @@
   "need_amount": "Unesite količinu.",
   "action_failed": "Nije uspelo: proverite integraciju.",
   "s_plate": "Tablica",
+  "s_plate_department": "Departman na tablici",
   "s_extra_km": "Cena dodatnog km",
   "s_charger": "Kućni punjač"
 }

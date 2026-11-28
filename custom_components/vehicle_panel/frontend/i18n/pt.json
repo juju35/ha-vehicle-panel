@@ -184,6 +184,7 @@
   "need_amount": "Indique a quantidade.",
   "action_failed": "Não funcionou: verifique a integração.",
   "s_plate": "Matrícula",
+  "s_plate_department": "Departamento da matrícula",
   "s_extra_km": "Preço do km extra",
   "s_charger": "Carregador doméstico"
 }
