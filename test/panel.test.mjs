@@ -279,6 +279,22 @@ test("actions are asked first in the panel: a button, Done, a refuel; saving sen
   assert.equal(p._saveState, "saved");
 });
 
+test("a language file is fetched with the version, so an update never shows a cached older one", async () => {
+  const urls = [];
+  const saved = globalThis.fetch;
+  globalThis.fetch = async (url) => {
+    urls.push(url);
+    return { ok: true, json: async () => ({ title: "Voitures" }) };
+  };
+  try {
+    lib.vpStringCache.delete("fr");
+    assert.equal((await lib.vpLoadStrings("fr")).title, "Voitures");
+  } finally {
+    globalThis.fetch = saved;
+  }
+  assert.deepEqual(urls, [`/vehicle_panel/i18n/fr.json?v=${lib.VEHICLE_PANEL_VERSION}`]);
+});
+
 test("the version is the same in the bundle and in package.json", () => {
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
   assert.equal(lib.VEHICLE_PANEL_VERSION, pkg.version);

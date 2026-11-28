@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.3.2 - 2026-11-28
+
+### Fixes
+- After an update, the panel no longer shows English words ("Yesterday", "Recent trips"…) in another language: the language file is fetched with the version, so the browser never keeps an older one.
+
 ## 1.3.1 - 2026-11-28
 
 ### Fixes

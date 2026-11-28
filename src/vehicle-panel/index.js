@@ -11,7 +11,7 @@ import "./views.js";
 import "./tabs.js";
 import "./panel.js";
 // The assembled module's own exports (the other `export`s only join the modules)
-export { VEHICLE_PANEL_VERSION, VP_EN, VP_LANGS, vpFmt, vpLang, vpT } from "./core.js";
+export { VEHICLE_PANEL_VERSION, VP_EN, VP_LANGS, vpFmt, vpLang, vpLoadStrings, vpStringCache, vpT } from "./core.js";
 export { vpTyrePos, vpVehicle } from "./discovery.js";
 export { vpDaily, vpLease, vpLevel, vpLocked, vpRange, vpStations, vpStatus, vpUrgency, vpWeekly } from "./model.js";
 export { vpBest, vpCard, vpCarFuel, vpChecks, vpDirections, vpFuelData, vpLeaseCurve, vpLeaseInfo, vpMaintenanceItems, vpMonthDriven, vpOpen, vpStationsFor, vpWeek } from "./rich.js";

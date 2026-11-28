@@ -1,7 +1,7 @@
 """Constants for the Vehicle Panel integration."""
 
 DOMAIN = "vehicle_panel"
-VERSION = "1.3.1"
+VERSION = "1.3.2"
 
 # Files served by the integration, and the sidebar panel (its own path, not /vehicle_panel,
 # so the frontend's panel route never shadows the files)
